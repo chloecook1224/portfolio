@@ -1,4 +1,3 @@
-/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 @import 'https://fonts.googleapis.com/css?family=Allura|Merriweather+Sans:400,700,800';
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;
 height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abb[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{font-size:2em;margin:0.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;
@@ -12,3 +11,5 @@ border-color:#6882f6}.blurb--framed{padding:15px 0;background-color:#fafafa}.blu
 .app-design2{position:relative;width:100%;padding:180px 0;overflow:hidden}.app-design__visual2{position:absolute;top:35px;left:45%;width:600px;height:659px;margin:0;background-image:url("../img/Bench.png");background-position:center;background-size:100%;background-repeat:no-repeat}
 
 .web-design2{position:relative;width:100%;padding:200px 0;background-color:#fafafa;overflow:hidden}.web-design__wrapper{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:end;-webkit-justify-content:flex-end;-ms-flex-pack:end;justify-content:flex-end}.web-design__visual2{position:absolute;top:50%;right:52%;-webkit-transform:translateY(-45%);transform:translateY(-45%);width:700px;height:581px;margin:0;background-image:url("../img/Kirby.png");background-position:center;background-size:100%;background-repeat:no-repeat}
+
+.contact h3{color: #585858}
