@@ -13,3 +13,37 @@ border-color:#6882f6}.blurb--framed{padding:15px 0;background-color:#fafafa}.blu
 .web-design2{position:relative;width:100%;padding:200px 0;background-color:#fafafa;overflow:hidden}.web-design__wrapper{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:end;-webkit-justify-content:flex-end;-ms-flex-pack:end;justify-content:flex-end}.web-design__visual2{position:absolute;top:50%;right:52%;-webkit-transform:translateY(-45%);transform:translateY(-45%);width:700px;height:581px;margin:0;background-image:url("../img/Kirby.png");background-position:center;background-size:100%;background-repeat:no-repeat}
 
 .contact h3{color: #585858}
+@media (max-width: 991px){
+    .app-design2__content h2{font-size:48px}
+    .app-design__visual2{width:922px;height:586px}
+  }
+  @media (max-width: 767px){
+    .app-design2{height:400px;padding:60px 0}
+    .app-design__visual2{top:auto;left:50%;bottom:-175px;transform:translateX(-50%);width:480px;height:639px}
+  }
+  @media (max-width: 480px){
+    .app-design__visual2{bottom:-100px;width:576px;height:366px}
+  }
+  @media (max-width: 991px){
+    .web-design__visual2{width:922px;height:586px}
+  }
+  @media (max-width: 767px){
+    .web-design2{height:400px;padding:60px 0}
+    .web-design__visual2{top:auto;left:50%;bottom:-175px;transform:translateX(-50%);width:410px;height:639px}
+  }
+  @media (max-width: 480px){
+    .web-design__visual2{bottom:-100px;width:576px;height:366px}
+  }
+  
+  
+  
+  
+ 
+  
+
+
+ 
+  
+  
+  
+  
