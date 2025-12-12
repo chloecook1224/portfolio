@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Zoo Redesign - Chloe Cook</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <style>
+    @import 'https://fonts.googleapis.com/css?family=Allura|Merriweather+Sans:400,700,800';
+
+    /* Reset and Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background-color: #fff;
+      font-size: 14px;
+      line-height: 1.6;
+      font-family: "Merriweather Sans", sans-serif;
+      color: #757575;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      display: inline-block;
+      color: #557851;
+      text-decoration: none;
+    }
+
+    ul, ol {
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      border: 0;
+      max-width: 100%;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      color: #222;
+      font-weight: bold;
+    }
+
+    h1 { font-size: 68px; line-height: 1.05; }
+    h2 { font-size: 42px; line-height: 1.14; }
+    h3 { font-size: 26px; line-height: 1.38; }
+    h4 { font-size: 22px; line-height: 1.38; }
+
+    p { margin: 0 0 20px 0; }
+    
+    .no-margin { margin: 0; }
+
+    /* Layout */
+    .wrapper, .wrapper--small, .wrapper--large {
+      position: relative;
+      max-width: 90%;
+      height: 100%;
+      margin: 0 auto;
+    }
+
+    .wrapper--small { max-width: 980px; }
+    .wrapper--large { max-width: 1170px; }
+
+    /* Components */
+    .logo {
+      color: #585858;
+      font-size: 34px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .transform-link {
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .transform-link::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: #557851;
+      transition: transform .2s ease-out;
+    }
+
+    .transform-link:hover::after {
+      transform: translateY(3px) scaleY(3);
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 30px;
+      color: #557851;
+      font-weight: 700;
+      background-color: transparent;
+      border-radius: 25px;
+      border: 2px solid #557851;
+      cursor: pointer;
+      transition: .2s all ease-in-out;
+    }
+
+    .button:hover {
+      color: #6882f6;
+      border-color: #6882f6;
+    }
+
+    /* Navigation */
+    .navigation {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      background-color: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+
+    .navigation__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .navigation__back {
+      display: flex;
+      align-items: center;
+      color: #557851;
+      font-weight: 700;
+      transition: color .2s ease-in-out;
+    }
+
+    .navigation__back:hover {
+      color: #6882f6;
+    }
+
+    .navigation__back svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      fill: currentColor;
+    }
+
+    /* Case Study Page Styles */
+    .case-study-page {
+      padding-top: 80px;
+    }
+
+    .case-study__hero {
+      text-align: center;
+      padding: 100px 0 80px 0;
+      background: linear-gradient(135deg, #f5f7f5 0%, #fff 100%);
+      border-bottom: 3px solid #557851;
+    }
+
+    .case-study__title {
+      color: #585858;
+      font-size: 58px;
+      font-weight: 800;
+      margin: 0 0 15px 0;
+    }
+
+    .case-study__subtitle {
+      color: #757575;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .case-study__content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .case-study__section {
+      margin-bottom: 100px;
+    }
+
+    .case-study__section--accent {
+      background-color: #f9f9f9;
+      padding: 60px 40px;
+      border-radius: 12px;
+      margin-left: -40px;
+      margin-right: -40px;
+    }
+
+    .case-study__section h2 {
+      color: #557851;
+      font-size: 42px;
+      font-weight: 800;
+      margin: 0 0 40px 0;
+    }
+
+    .case-study__section h3 {
+      color: #585858;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 40px 0 20px 0;
+    }
+
+    .case-study__section h4 {
+      color: #585858;
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0 0 8px 0;
+    }
+
+    .case-study__text {
+      color: #757575;
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .case-study__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .case-study__detail {
+      padding: 25px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #557851;
+    }
+
+    .case-study__detail p {
+      color: #585858;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .case-study__list {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+    }
+
+    .case-study__list li {
+      color: #757575;
+      font-size: 16px;
+      line-height: 1.8;
+      padding-left: 35px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .case-study__list li::before {
+      content: "●";
+      position: absolute;
+      left: 0;
+      top: 4px;
+      color: #557851;
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .case-study__image-placeholder {
+      width: 100%;
+      min-height: 400px;
+      background-color: #e8e8e8;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-style: italic;
+      margin: 40px 0;
+      border: 2px dashed #ccc;
+    }
+
+    .case-study__image {
+      width: 100%;
+      border-radius: 12px;
+      margin: 40px 0;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    /* Wireframe Carousel Styles */
+    .wireframe-carousel {
+      width: 100%;
+      margin: 40px 0;
+      position: relative;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    .carousel-image {
+      display: none;
+      width: 100%;
+      height: auto;
+    }
+
+    .carousel-image.active {
+      display: block;
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .carousel-btn {
+      background-color: #557851;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 24px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .carousel-btn:hover {
+      background-color: #6882f6;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      background-color: #ccc;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .dot.active,
+    .dot:hover {
+      background-color: #557851;
+    }
+
+    .case-study__back-to-top {
+      text-align: center;
+      padding: 60px 0 80px 0;
+    }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      width: 100%;
+      padding: 40px 0;
+      background-color: #f5f7f5;
+    }
+
+    .footer__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer__copyright {
+      color: #757575;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 991px) {
+      .case-study__title {
+        font-size: 42px;
+      }
+
+      .case-study__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .case-study__content {
+        padding: 60px 30px;
+      }
+
+      .case-study__section h2 {
+        font-size: 36px;
+      }
+
+      .case-study__section h3 {
+        font-size: 24px;
+      }
+
+      .case-study__section--accent {
+        padding: 40px 30px;
+        margin-left: -30px;
+        margin-right: -30px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .case-study__title {
+        font-size: 32px;
+      }
+
+      .case-study__hero {
+        padding: 60px 0 50px 0;
+      }
+
+      .case-study__content {
+        padding: 40px 20px;
+      }
+
+      .case-study__section h2 {
+        font-size: 28px;
+      }
+
+      .case-study__section h3 {
+        font-size: 22px;
+      }
+
+      .case-study__section--accent {
+        padding: 30px 20px;
+        margin-left: -20px;
+        margin-right: -20px;
+      }
+
+      .case-study__image-placeholder {
+        min-height: 250px;
+      }
+
+      .navigation__back span {
+        display: none;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <div class="navigation">
+    <div class="navigation__wrapper wrapper--large">
+      <a class="navigation__back" href="index.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        <span>Back to Portfolio</span>
+      </a>
+      <a class="logo" href="index.html">CC</a>
+    </div>
+  </div>
+
+  <!-- Case Study Content -->
+  <div class="case-study-page">
+    <!-- Hero Section -->
+    <div class="case-study__hero">
+      <h1 class="case-study__title">Cheyenne Mountain Zoo<br>Website Redesign</h1>
+      <p class="case-study__subtitle">UX Case Study</p>
+    </div>
+
+    <div class="case-study__content">
+      <!-- Project Overview -->
+      <section class="case-study__section">
+        <h2>Project Overview</h2>
+        
+        <div class="project-info-box">
+          <h4>ROLE</h4>
+          <p>UX Designer</p>
+        </div>
+        
+        <div class="project-info-box">
+          <h4>TOOLS</h4>
+          <p>Figma</p>
+        </div>
+        
+        <p class="case-study__text" style="margin-top: 40px;">This project focused on redesigning the Cheyenne Mountain Zoo website to improve the overall user experience, streamline ticket purchasing, and make information more accessible for visitors planning their trip to the zoo.</p>
+      </section>
+
+      <!-- The Challenge -->
+      <section class="case-study__section">
+        <h2>The Challenge</h2>
+        <h3>Problem Statement</h3>
+        <p class="case-study__text">The current Cheyenne Mountain Zoo website presents navigation challenges for visitors trying to plan their trip and purchase tickets. Users struggle to find key information about exhibits, operating hours, and special events, leading to frustration and abandoned booking attempts.</p>
+        <h3>Goals</h3>
+        <ul class="case-study__list">
+          <li>Simplify the ticket purchasing process and reduce checkout abandonment</li>
+          <li>Create better information architecture to showcase zoo attractions and animals</li>
+          <li>Enhance accessibility for all users</li>
+        </ul>
+      </section>
+
+      <!-- Research Phase -->
+      <section class="case-study__section case-study__section--accent">
+        <h2>Research Phase</h2>
+        
+        <h3>Usability Testing</h3>
+        <p class="case-study__text">I conducted usability testing on the current Cheyenne Mountain Zoo website with 5 participants to identify pain points and areas for improvement.</p>
+        <ul class="case-study__list">
+          <li><strong>Navigation Confusion:</strong> Users had difficulty locating where to purchase a ticket and why it took so many clicks.</li>
+          <li><strong>Ticket Purchase Friction:</strong> The checkout process had too many steps and unclear pricing options</li>
+          <li><strong>Information Overload:</strong> Too much text on pages made it difficult to scan for key details</li>
+        </ul>
+
+        <h3>Affinity Mapping</h3>
+        <p class="case-study__text">After gathering user feedback, I organized insights into themes using affinity mapping. Key themes that emerged included navigation issues, booking complexity, and need for visual hierarchy.</p>
+        <img src="assets/img/affinity-mapping.jpg" alt="Affinity mapping with colorful sticky notes organized into groups" class="case-study__image">
+        
+        <h3>How Might We Questions</h3>
+        <p class="case-study__text">From the affinity mapping exercise, I developed three key "How Might We" questions to guide the design process:</p>
+        <ul class="case-study__list">
+          <li>How might we improve the looks of Cheyenne Mountain Zoo?</li>
+          <li>How might we make the Cheyenne Mountain Zoo website less confusing to navigate?</li>
+          <li>How might we make important information for Cheyenne Mountain Zoo more relevant and stand out?</li>
+        </ul>
+      </section>
+
+      <!-- Define -->
+      <section class="case-study__section">
+        <h2>Define</h2>
+        <h3>Refined Problem Statement</h3>
+        <p class="case-study__text">Zoo visitors need a clear, intuitive way to plan their visit and purchase tickets because the current website's complex navigation and checkout process creates frustration and prevents them from easily purchasing tickets.</p>
+        
+        <h3>Proposed Task Flow</h3>
+        <p class="case-study__text">I mapped out an optimized user flow for the ticket purchasing journey. The task was to create a better experience for a user purchasing 2 adult tickets for Thursday, December 11 at 11:00 am, starting from the homepage and ending with a confirmation screen.</p>
+        <p class="case-study__text">My proposed flow reduces steps from the original 7-step process to 4 streamlined steps, while maintaining key requirements:</p>
+        <ul class="case-study__list">
+          <li>Tickets must be purchased for a specific day and time</li>
+          <li>Tickets must be purchased for a specific age range (adult)</li>
+          <li>Flow starts on the homepage and ends with email confirmation</li>
+        </ul>
+        <img src="assets/img/task-flow.png" alt="Task flow diagram showing the streamlined ticket purchasing process" class="case-study__image">
+      </section>
+
+      <!-- Design -->
+      <section class="case-study__section case-study__section--accent">
+        <h2>Ideation & Design</h2>
+        
+        <h3>Low Fidelity Wireframes</h3>
+        <p class="case-study__text">I started with paper sketches to quickly explore different layout options and information hierarchies. The focus was on simplifying navigation and making the ticket purchase path more obvious.</p>
+        <p class="case-study__text">Key screens included:</p>
+        <ul class="case-study__list">
+          <li><strong>Homepage redesign:</strong> Simplified layout with prominent "BUY Tickets" call-to-action and clear navigation</li>
+          <li><strong>Ticket selection screen:</strong> Consolidated all ticket information (date, time, quantity, pricing) into a single, easy-to-scan view with personal information fields on the same page</li>
+        </ul>
+        <img src="assets/img/lowfi-wireframes.jpg" alt="Low-fidelity wireframe sketches showing homepage and ticket selection screens" class="case-study__image">
+
+        <h3>Mid Fidelity Wireframes</h3>
+        <p class="case-study__text">Moving to digital wireframes, I refined the information architecture and added more detail to key screens. These wireframes show the complete ticket purchasing flow from homepage to confirmation.</p>
+        
+        <div class="wireframe-carousel">
+          <div class="carousel-container">
+            <img src="assets/img/midfi-homepage.png" alt="Mid-fidelity wireframe - Homepage with Buy Tickets button" class="carousel-image active">
+            <img src="assets/img/midfi-ticket-selection.png" alt="Mid-fidelity wireframe - Ticket selection with quantity and pricing" class="carousel-image">
+            <img src="assets/img/midfi-date-time.png" alt="Mid-fidelity wireframe - Date and time selection screen" class="carousel-image">
+            <img src="assets/img/midfi-confirmation.png" alt="Mid-fidelity wireframe - Confirmation screen with ticket details" class="carousel-image">
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn prev" onclick="changeSlide(-1)" aria-label="Previous image">‹</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
+              <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+            <button class="carousel-btn next" onclick="changeSlide(1)" aria-label="Next image">›</button>
+          </div>
+        </div>
+
+        <h3>Brand Foundational Elements</h3>
+        <p class="case-study__text">I developed a fresh visual identity that maintains connection to the zoo's natural setting while feeling modern and accessible:</p>
+        <ul class="case-study__list">
+          <li><strong>Typography:</strong> Montserrat font family for headers and body text, ensuring readability and accessibility with minimum 16px body text</li>
+          <li><strong>Icons:</strong> Consistent 24x24px icon set for navigation and interactive elements</li>
+          <li><strong>Color Palette:</strong> Earthy olive greens paired with persian orange accents, viridian success green, and YinMn blue for informational elements</li>
+        </ul>
+        
+        <div class="wireframe-carousel">
+          <div class="carousel-container">
+            <!-- <img src="assets/img/brand-typography.png" alt="Brand foundational elements - Typography guidelines" class="carousel-image active"> -->
+            <img src="assets/img/brand-icons.png" alt="Brand foundational elements - Icon set" class="carousel-image">
+            <img src="assets/img/brand-colors.png" alt="Brand foundational elements - Color palette" class="carousel-image">
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn prev" onclick="changeBrandSlide(-1)" aria-label="Previous image">‹</button>
+            <div class="carousel-dots" id="brand-dots">
+              <span class="dot active" onclick="currentBrandSlide(1)"></span>
+              <span class="dot" onclick="currentBrandSlide(2)"></span>
+              <!-- <span class="dot" onclick="currentBrandSlide(3)"></span> -->
+            </div>
+            <button class="carousel-btn next" onclick="changeBrandSlide(1)" aria-label="Next image">›</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Prototyping -->
+      <section class="case-study__section">
+        <h2>Prototyping & Testing</h2>
+        
+        <h3>High Fidelity Interactive Prototype V1</h3>
+        <p class="case-study__text">I created a fully interactive prototype with the new visual design applied. Key improvements included:</p>
+        <ul class="case-study__list">
+          <li><strong>Homepage redesign:</strong> Cleaner hero section with prominent "Buy Tickets" button and engaging animal imagery</li>
+          <li><strong>Simplified ticket flow:</strong> Streamlined from 7 steps to 4 steps - ticket type selection, date/time selection, personal information, and confirmation</li>
+          <li><strong>Clear pricing display:</strong> Ticket pricing and fees shown upfront with running total throughout the process</li>
+          <li><strong>Improved information hierarchy:</strong> Important details like date, time, and pricing displayed prominently with consistent styling</li>
+        </ul>
+        
+        <div class="wireframe-carousel">
+          <div class="carousel-container">
+            <img src="assets/img/highfi-v1-homepage.png" alt="High-fidelity prototype V1 - Homepage with animals" class="carousel-image active">
+            <img src="assets/img/highfi-v1-ticket-type.png" alt="High-fidelity prototype V1 - Ticket type selection" class="carousel-image">
+            <img src="assets/img/highfi-v1-datetime.png" alt="High-fidelity prototype V1 - Date and time selection" class="carousel-image">
+            <img src="assets/img/highfi-v1-personal-info.png" alt="High-fidelity prototype V1 - Personal information form" class="carousel-image">
+            <img src="assets/img/highfi-v1-confirmation.png" alt="High-fidelity prototype V1 - Confirmation screen" class="carousel-image">
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn prev" onclick="changeHighfiV1Slide(-1)" aria-label="Previous image">‹</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="currentHighfiV1Slide(1)"></span>
+              <span class="dot" onclick="currentHighfiV1Slide(2)"></span>
+              <span class="dot" onclick="currentHighfiV1Slide(3)"></span>
+              <span class="dot" onclick="currentHighfiV1Slide(4)"></span>
+              <span class="dot" onclick="currentHighfiV1Slide(5)"></span>
+            </div>
+            <button class="carousel-btn next" onclick="changeHighfiV1Slide(1)" aria-label="Next image">›</button>
+          </div>
+        </div>
+
+        <h3>User Testing Results</h3>
+        <p class="case-study__text">I conducted usability testing with 5 new participants using the V1 prototype. Key insights:</p>
+        <ul class="case-study__list">
+          <li><strong>Success:</strong> All users completed the ticket purchase flow without assistance</li>
+          <li><strong>Improvement Needed:</strong> Users wanted more prominent display of operating hours</li>
+          <li><strong>Positive Feedback:</strong> Users loved the animal pictures and visual design</li>
+        </ul>
+      </section>
+
+      <!-- Final Design -->
+      <section class="case-study__section case-study__section--accent">
+        <h2>Final Design</h2>
+        <h3>High Fidelity Interactive Prototype V2</h3>
+        <p class="case-study__text">Based on user testing feedback, I made the following improvements:</p>
+        <ul class="case-study__list">
+          <li><strong>Simplified personal information form:</strong> Used a single column layout so that the ticket information could scroll along the screen woth the user.</li>
+          <li><strong>Added payment screen:</strong> Introduced a dedicated payment page within the information sectionm keeping checkout process organized and reducing cognitive load</li>
+          <li><strong>Enhanced confirmation design:</strong> Moved ticket summary to the top with clear visual hierarchy, removed unnecessary navigation tabs, and added footer with zoo contact information and newsletter signup</li>
+          <li><strong>Improved visual consistency:</strong> Standardized button styles and spacing throughout the entire flow for a more polished, professional appearance, including adding a secodnary button.</li>
+          <li><strong>Better error prevention:</strong> Added checkboxes with clear labels for optional features like "Text me with receipts" and important disclaimers before checkout</li>
+        </ul>
+        
+        <div class="wireframe-carousel">
+          <div class="carousel-container">
+            <img src="assets/img/highfi-v2-homepage.png" alt="High-fidelity prototype V2 - Homepage with improved imagery" class="carousel-image active">
+            <img src="assets/img/highfi-v2-ticket-type.png" alt="High-fidelity prototype V2 - Ticket type selection" class="carousel-image">
+            <img src="assets/img/highfi-v2-datetime.png" alt="High-fidelity prototype V2 - Date and time selection" class="carousel-image">
+            <img src="assets/img/highfi-v2-personal-info.png" alt="High-fidelity prototype V2 - Simplified personal information" class="carousel-image">
+            <img src="assets/img/highfi-v2-payment.png" alt="High-fidelity prototype V2 - New payment screen" class="carousel-image">
+            <img src="assets/img/highfi-v2-confirmation.jpg" alt="High-fidelity prototype V2 - Enhanced confirmation with footer" class="carousel-image">
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn prev" onclick="changeHighfiV2Slide(-1)" aria-label="Previous image">‹</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="currentHighfiV2Slide(1)"></span>
+              <span class="dot" onclick="currentHighfiV2Slide(2)"></span>
+              <span class="dot" onclick="currentHighfiV2Slide(3)"></span>
+              <span class="dot" onclick="currentHighfiV2Slide(4)"></span>
+              <span class="dot" onclick="currentHighfiV2Slide(5)"></span>
+              <span class="dot" onclick="currentHighfiV2Slide(6)"></span>
+            </div>
+            <button class="carousel-btn next" onclick="changeHighfiV2Slide(1)" aria-label="Next image">›</button>
+          </div>
+        </div>
+      </section>
+
+     <!-- Results -->
+      <section class="case-study__section">
+        <h2>Results & Impact</h2>
+        <h3>Design Improvements</h3>
+        <ul class="case-study__list">
+          <li><strong>Streamlined Checkout Flow:</strong> Reduced from 7 steps to 4 steps, eliminating unnecessary navigation and form pages</li>
+          <li><strong>Fewer Clicks to Purchase:</strong> Users can now complete ticket purchase in 4 clicks from homepage instead of the original 8+ clicks</li>
+          <li><strong>Improved Task Completion:</strong> All 5 usability test participants successfully completed the ticket purchase without assistance in the final design</li>
+          <li><strong>Enhanced Visual Hierarchy:</strong> Clear pricing display and prominent CTAs made key information immediately scannable</li>
+        </ul>
+      </section>
+
+      <!-- Takeaways -->
+      <section class="case-study__section">
+        <h2>Key Takeaways & Learnings</h2>
+        <h3>What I Learned</h3>
+        <ul class="case-study__list">
+          <li>The importance of testing early and often - user feedback in the wireframe stage saved significant rework time</li>
+          <li>Small changes like prominent operating hours can have big impacts on user confidence and satisfaction</li>
+          <li>Iterative design based on real user feedback leads to better outcomes than trying to get everything perfect the first time</li>
+        </ul>
+
+        <h3>How I Would Improve This Design Further</h3>
+        <ul class="case-study__list">
+          <li><strong>Add real-time availability indicators:</strong> Show ticket availability for different time slots to help users make informed decisions</li>
+          <li><strong>Implement progress indicators:</strong> Add a visual progress bar showing users where they are in the checkout process</li>
+          <li><strong>Mobile-first refinements:</strong> Further optimize the mobile experience with larger touch targets and simplified forms</li>
+        </ul>
+
+        <h3>Skills Developed</h3>
+        <ul class="case-study__list">
+          <li>User research and usability testing methodologies</li>
+          <li>Information architecture and navigation design</li>
+          <li>E-commerce checkout flow optimization</li>
+          <li>Iterative design based on user feedback</li>
+        </ul>
+      </section>
+
+      <section class="case-study__section">
+        <h2>Next Steps</h2>
+        <p class="case-study__text">With more time and resources, I would conduct A/B testing on the new design with real zoo visitors, implement analytics to track conversion rates, and continue iterating based on actual usage data. I'd also explore adding personalization features like saving favorite animals or creating custom visit itineraries.</p>
+      </section>
+
+      <!-- Back to Top -->
+      <div class="case-study__back-to-top">
+        <a class="button" href="index.html">Back to Portfolio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__wrapper wrapper--large">
+      <p class="footer__copyright">&copy; 2025 Chloe Cook</p>
+      <a class="logo" href="index.html">CC</a>
+    </div>
+  </footer>
+
+  <script>
+    // Mid-fidelity wireframes carousel
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function changeSlide(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let slides = document.querySelectorAll(".wireframe-carousel:first-of-type .carousel-image");
+      let dots = document.querySelectorAll(".wireframe-carousel:first-of-type .dot");
+      
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+      
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+      }
+      
+      slides[slideIndex - 1].classList.add("active");
+      dots[slideIndex - 1].classList.add("active");
+    }
+
+    // Brand elements carousel
+    let brandSlideIndex = 1;
+    showBrandSlides(brandSlideIndex);
+
+    function changeBrandSlide(n) {
+      showBrandSlides(brandSlideIndex += n);
+    }
+
+    function currentBrandSlide(n) {
+      showBrandSlides(brandSlideIndex = n);
+    }
+
+    function showBrandSlides(n) {
+      let carousels = document.querySelectorAll(".wireframe-carousel");
+      let slides = carousels[1].querySelectorAll(".carousel-image");
+      let dots = carousels[1].querySelectorAll(".dot");
+      
+      if (n > slides.length) { brandSlideIndex = 1 }
+      if (n < 1) { brandSlideIndex = slides.length }
+      
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+      
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+      }
+      
+      slides[brandSlideIndex - 1].classList.add("active");
+      dots[brandSlideIndex - 1].classList.add("active");
+    }
+
+    // High-fidelity V1 carousel
+    let highfiV1SlideIndex = 1;
+    showHighfiV1Slides(highfiV1SlideIndex);
+
+    function changeHighfiV1Slide(n) {
+      showHighfiV1Slides(highfiV1SlideIndex += n);
+    }
+
+    function currentHighfiV1Slide(n) {
+      showHighfiV1Slides(highfiV1SlideIndex = n);
+    }
+
+    function showHighfiV1Slides(n) {
+      let carousels = document.querySelectorAll(".wireframe-carousel");
+      let slides = carousels[2].querySelectorAll(".carousel-image");
+      let dots = carousels[2].querySelectorAll(".dot");
+      
+      if (n > slides.length) { highfiV1SlideIndex = 1 }
+      if (n < 1) { highfiV1SlideIndex = slides.length }
+      
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+      
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+      }
+      
+      slides[highfiV1SlideIndex - 1].classList.add("active");
+      dots[highfiV1SlideIndex - 1].classList.add("active");
+    }
+
+    // High-fidelity V2 carousel
+    let highfiV2SlideIndex = 1;
+    showHighfiV2Slides(highfiV2SlideIndex);
+
+    function changeHighfiV2Slide(n) {
+      showHighfiV2Slides(highfiV2SlideIndex += n);
+    }
+
+    function currentHighfiV2Slide(n) {
+      showHighfiV2Slides(highfiV2SlideIndex = n);
+    }
+
+    function showHighfiV2Slides(n) {
+      let carousels = document.querySelectorAll(".wireframe-carousel");
+      let slides = carousels[3].querySelectorAll(".carousel-image");
+      let dots = carousels[3].querySelectorAll(".dot");
+      
+      if (n > slides.length) { highfiV2SlideIndex = 1 }
+      if (n < 1) { highfiV2SlideIndex = slides.length }
+      
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+      
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+      }
+      
+      slides[highfiV2SlideIndex - 1].classList.add("active");
+      dots[highfiV2SlideIndex - 1].classList.add("active");
+    }
+  </script>
+</body>
+</html>
