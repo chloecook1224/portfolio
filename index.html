@@ -114,6 +114,133 @@
         padding: 30px;
       }
     }
+    
+    /* Zoo section with side-by-side layout */
+    .web-design--zoo {
+      position: relative;
+      overflow: hidden;
+      padding: 120px 0 180px 0;
+      background-color: #f9f9f9;
+    }
+    
+    .web-design__wrapper--zoo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 1170px;
+      margin: 0 auto;
+      padding: 0 0 0 0;
+      box-sizing: border-box;
+    }
+    
+    .web-design--zoo .web-design__content {
+      align-self: start;
+    }
+    
+    .web-design--zoo .blurb__heading {
+      margin-bottom: 15px;
+    }
+    
+    .web-design--zoo .blurb__copy--tight {
+      margin-bottom: 20px;
+    }
+    
+    .web-design__image-container {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: transform 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    .web-design__image-container:hover {
+      transform: perspective(1000px) rotateY(-2deg);
+    }
+    
+    .web-design__image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Responsive for zoo section */
+    @media (max-width: 991px) {
+      .web-design--zoo {
+        padding: 60px 0;
+        overflow-x: hidden;
+      }
+      
+      .web-design__wrapper--zoo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .web-design--zoo .web-design__content {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 40px;
+        box-sizing: border-box;
+      }
+      
+      .web-design--zoo .blurb__heading {
+        font-size: 36px;
+        word-wrap: break-word;
+      }
+      
+      .web-design--zoo .blurb__copy--tight {
+        max-width: 100%;
+        margin: 0 auto 20px auto;
+      }
+      
+      .web-design__image-container {
+        transform: none;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      
+      .web-design__image-container img {
+        width: 100%;
+        height: auto;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .web-design--zoo {
+        padding: 40px 0 60px 0;
+      }
+      
+      .web-design__wrapper--zoo {
+        padding: 0 15px;
+      }
+      
+      .web-design--zoo .blurb__heading {
+        font-size: 28px;
+        line-height: 1.2;
+      }
+      
+      .web-design--zoo .blurb__copy--tight {
+        font-size: 14px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .web-design--zoo .blurb__heading {
+        font-size: 24px;
+      }
+      
+      .web-design__wrapper--zoo {
+        padding: 0 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -167,15 +294,15 @@
       
     
       <!-- Zoo Case Study -->
-      <section class="web-design" style="position: relative; overflow: hidden; padding: 100px 0;">
-        <div class="web-design__wrapper wrapper--large" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 40px;">
+      <section class="web-design web-design--zoo">
+        <div class="web-design__wrapper wrapper--large web-design__wrapper--zoo">
           <div class="web-design__content blurb">
-            <h2 class="blurb__heading" style="font-size: 48px;  line-height: 1.2; margin-bottom: 20px;">Cheyenne Mountain Zoo Redesign</h2>
-            <p class="blurb__copy blurb__copy--tight" style="font-size: 18px; line-height: 1.6; margin-bottom: 30px;">UX case study redesigning the zoo's website for better user experience, improved navigation, and enhanced visitor engagement.</p>
-            <a class="transform-link" href="zoo-case-study.html"> Check it out</a>
+            <h2 class="blurb__heading">Cheyenne Mountain Zoo Redesign</h2>
+            <p class="blurb__copy blurb__copy--tight">UX case study redesigning the zoo's website for better user experience, improved navigation, and enhanced visitor engagement.</p>
+            <a class="transform-link" href="zoo-case-study.html">Check it out</a>
           </div>
-          <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transform: perspective(1000px) rotateY(-5deg); transition: transform 0.3s ease;">
-            <img src="assets/img/highfi-v2-homepage.png" alt="Zoo Website Redesign" style="width: 100%; height: auto; display: block;">
+          <div class="web-design__image-container">
+            <img src="assets/img/highfi-v2-homepage.png" alt="Zoo Website Redesign">
           </div>
         </div>
       </section>
