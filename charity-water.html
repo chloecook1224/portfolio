@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>charity: water UX Audit — Chloe Cook</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Merriweather+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:      #557851;
+      --green-light:#6b9165;
+      --green-pale: #f0f5ee;
+      --ink:        #1a1a1a;
+      --ink-mid:    #585858;
+      --ink-soft:   #757575;
+      --surface:    #f9f9f6;
+      --white:      #ffffff;
+      --accent:     #6882f6;
+      --blue-pale:  #f0f3ff;
+      --red-pale:   #fff2f2;
+      --border:     rgba(0,0,0,0.08);
+      --trans:      .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      font-family: "Merriweather Sans", sans-serif;
+      font-size: 15px; line-height: 1.65;
+      color: var(--ink-soft);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--green); text-decoration: none; display: inline-block; }
+    img { max-width: 100%; display: block; border: 0; }
+    p { margin: 0 0 1.1em; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--ink-mid); font-weight: 700; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 68px;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+    }
+    .nav__inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav__back {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700;
+      color: var(--green); transition: color var(--trans);
+    }
+    .nav__back:hover { color: var(--accent); }
+    .nav__back svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+    .nav__logo { font-family: "Instrument Serif", serif; font-size: 24px; color: var(--ink); }
+
+    /* ── HERO ── */
+    .cs-hero { padding-top: 68px; background: var(--surface); border-bottom: 3px solid var(--green); }
+    .cs-hero__inner {
+      max-width: 1160px; margin: 0 auto; padding: 80px 40px 60px;
+    }
+    .cs-hero__eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 20px;
+    }
+    .cs-hero__eyebrow::before {
+      content: ''; display: block; width: 28px; height: 2px;
+      background: var(--green); border-radius: 2px;
+    }
+    .cs-hero__title {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 400; color: var(--ink);
+      letter-spacing: -.03em; line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .cs-hero__desc {
+      font-size: 17px; line-height: 1.75;
+      color: var(--ink-soft); max-width: 680px;
+    }
+
+    /* ── STATS BAR ── */
+    .cs-stats { background: var(--green); padding: 36px 0; }
+    .cs-stats__inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .cs-stat { padding: 0 32px; border-right: 1px solid rgba(255,255,255,.2); }
+    .cs-stat:first-child { padding-left: 0; }
+    .cs-stat:last-child  { border-right: none; }
+    .cs-stat__value {
+      font-family: "Instrument Serif", serif;
+      font-size: 36px; font-weight: 400;
+      color: #fff; line-height: 1; display: block; margin-bottom: 6px;
+    }
+    .cs-stat__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.7); display: block;
+    }
+    @media (max-width: 640px) {
+      .cs-stats__inner { grid-template-columns: repeat(2,1fr); gap: 24px; }
+      .cs-stat { border-right: none; padding: 0; }
+    }
+
+    /* ── CONTENT ── */
+    .cs-content { max-width: 1160px; margin: 0 auto; padding: 80px 40px; }
+    @media (max-width: 640px) { .cs-content { padding: 48px 20px; } }
+
+    /* ── SECTIONS ── */
+    .cs-section { margin-bottom: 80px; }
+    .cs-section__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--green);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .cs-section__label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .cs-section h2 {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 400; color: var(--ink);
+      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 28px;
+    }
+    .cs-section h3 { font-size: 18px; font-weight: 800; color: var(--ink-mid); margin: 40px 0 14px; }
+    .cs-section h3:first-of-type { margin-top: 0; }
+    .cs-text { font-size: 16px; line-height: 1.85; color: var(--ink-soft); margin-bottom: 20px; }
+
+    /* ── ACCENT ── */
+    .cs-accent {
+      background: var(--surface); border-radius: 16px;
+      padding: 48px 52px; margin-bottom: 80px;
+    }
+    @media (max-width: 860px) { .cs-accent { padding: 36px 28px; margin-bottom: 64px; } }
+
+    /* ── OVERVIEW GRID ── */
+    .cs-overview {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 40px;
+    }
+    .cs-overview__item {
+      padding: 20px 22px; background: var(--white);
+      border-radius: 12px; border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+    }
+    .cs-overview__item h4 {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 8px;
+    }
+    .cs-overview__item p { font-size: 14px; color: var(--ink-mid); font-weight: 700; margin: 0; }
+    @media (max-width: 640px) { .cs-overview { grid-template-columns: 1fr 1fr; } }
+
+    /* ── LIST ── */
+    .cs-list { list-style: none; padding: 0; margin: 20px 0; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { font-size: 15px; line-height: 1.75; color: var(--ink-soft); padding-left: 24px; position: relative; }
+    .cs-list li::before {
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+    }
+
+    /* ── PROS / CONS GRID ── */
+    .cs-proscons { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+    .cs-proscons__col {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+    }
+    .cs-proscons__head {
+      padding: 14px 22px; font-size: 12px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .cs-proscons__head--pro { background: var(--green-pale); color: var(--green); }
+    .cs-proscons__head--con { background: var(--red-pale); color: #c0392b; }
+    .cs-proscons__body { padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+    .cs-proscons__item { font-size: 13px; color: var(--ink-soft); line-height: 1.6; padding-left: 18px; position: relative; }
+    .cs-proscons__item::before {
+      content: ''; position: absolute; left: 0; top: 7px;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--border);
+    }
+    @media (max-width: 560px) { .cs-proscons { grid-template-columns: 1fr; } }
+
+    /* ── FINDING CARDS ── */
+    .cs-findings { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+    .cs-finding {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px 26px;
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 20px; align-items: start;
+    }
+    .cs-finding__severity {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding-top: 2px;
+    }
+    .cs-finding__severity--high   { color: #c0392b; }
+    .cs-finding__severity--medium { color: #e67e22; }
+    .cs-finding__severity--low    { color: var(--green); }
+    .cs-finding__title { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+    .cs-finding__desc  { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin: 0; }
+    @media (max-width: 560px) { .cs-finding { grid-template-columns: 1fr; gap: 6px; } }
+
+    /* ── QUOTE ── */
+    .cs-quote {
+      border-left: 4px solid var(--green); padding: 16px 24px;
+      margin: 28px 0; background: var(--green-pale); border-radius: 0 10px 10px 0;
+    }
+    .cs-quote p { font-size: 16px; font-style: italic; color: var(--ink-mid); line-height: 1.7; margin-bottom: 8px; }
+    .cs-quote cite { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green); font-style: normal; }
+
+    /* ── UX LAW CARDS ── */
+    .cs-laws { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+    .cs-law {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 0; background: var(--white);
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    }
+    .cs-law__name {
+      padding: 22px 20px;
+      background: var(--green-pale);
+      border-right: 1px solid rgba(85,120,81,.15);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .cs-law__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 6px;
+    }
+    .cs-law__title {
+      font-size: 15px; font-weight: 800;
+      color: var(--ink); line-height: 1.3;
+    }
+    .cs-law__body { padding: 22px 24px; }
+    .cs-law__finding {
+      font-size: 14px; font-weight: 800;
+      color: var(--ink-mid); margin-bottom: 6px;
+    }
+    .cs-law__desc {
+      font-size: 14px; color: var(--ink-soft);
+      line-height: 1.65; margin: 0;
+    }
+    @media (max-width: 640px) { .cs-law { grid-template-columns: 1fr; } .cs-law__name { border-right: none; border-bottom: 1px solid rgba(85,120,81,.15); } }
+
+    /* ── RECOMMENDATION CARDS ── */
+    .cs-recs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    .cs-rec {
+      padding: 22px 24px; background: var(--white);
+      border: 1px solid var(--border); border-top: 3px solid var(--green);
+      border-radius: 0 0 12px 12px;
+    }
+    .cs-rec__priority {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 8px;
+    }
+    .cs-rec__title { font-size: 14px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+    .cs-rec__desc  { font-size: 13px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+    @media (max-width: 640px) { .cs-recs { grid-template-columns: 1fr; } }
+
+    /* ── REFLECTION ── */
+    .cs-reflection {
+      background: var(--ink); border-radius: 16px;
+      padding: 40px 44px; margin: 0 0 80px;
+    }
+    .cs-reflection h3 { font-family: "Instrument Serif", serif; font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 16px; }
+    .cs-reflection p { font-size: 15px; color: rgba(255,255,255,.7); line-height: 1.8; margin-bottom: 12px; }
+    .cs-reflection p:last-child { margin-bottom: 0; }
+    @media (max-width: 640px) { .cs-reflection { padding: 28px 24px; } }
+
+    /* ── FIGMA CTA ── */
+    .cs-figma-cta {
+      display: flex; align-items: center; gap: 20px;
+      background: var(--blue-pale); border: 1px solid rgba(104,130,246,.2);
+      border-radius: 14px; padding: 24px 28px; margin: 32px 0;
+    }
+    .cs-figma-cta__icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.04);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cs-figma-cta__text h4 { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+    .cs-figma-cta__text p { font-size: 13px; color: var(--ink-soft); margin: 0; }
+    .cs-figma-cta__link {
+      margin-left: auto; flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 30px;
+      background: var(--accent); color: #fff;
+      font-size: 13px; font-weight: 700;
+      transition: background var(--trans);
+    }
+    .cs-figma-cta__link:hover { background: var(--ink); color: #fff; }
+    @media (max-width: 560px) { .cs-figma-cta { flex-direction: column; align-items: flex-start; } .cs-figma-cta__link { margin-left: 0; } }
+
+    /* ── FOOTER ── */
+    .cs-footer { text-align: center; padding: 60px 40px 80px; border-top: 1px solid var(--border); }
+    .cs-footer__btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; border-radius: 40px;
+      font-size: 14px; font-weight: 700;
+      background: transparent; color: var(--green);
+      border: 2px solid var(--green); transition: all var(--trans);
+    }
+    .cs-footer__btn:hover { background: var(--green); color: #fff; }
+    .footer { padding: 36px 0; border-top: 1px solid var(--border); background: var(--surface); }
+    .footer__inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer__copy { font-size: 13px; color: var(--ink-soft); }
+    .footer__logo { font-family: "Instrument Serif", serif; font-size: 22px; color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a class="nav__back" href="ux-projects.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        Back to UX Projects
+      </a>
+      <a class="nav__logo" href="index.html">CC</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="cs-hero">
+    <div class="cs-hero__inner">
+      <p class="cs-hero__eyebrow">UX Audit · Case Study</p>
+      <h1 class="cs-hero__title">charity: water<br>UX Audit</h1>
+      <p class="cs-hero__desc">A comprehensive usability audit of the charity: water website — evaluating visual design, accessibility, information architecture, and the donation flow to identify where the experience supports the mission and where it doesn't.</p>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="cs-stats">
+    <div class="cs-stats__inner">
+      <div class="cs-stat">
+        <span class="cs-stat__value">3</span>
+        <span class="cs-stat__label">Key pages audited</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat__value">5</span>
+        <span class="cs-stat__label">Evaluation methods</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat__value">2</span>
+        <span class="cs-stat__label">Card sort participants</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat__value">Figma</span>
+        <span class="cs-stat__label">Deliverable</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-content">
+
+    <!-- 01 OVERVIEW -->
+    <section class="cs-section">
+      <p class="cs-section__label">01 — Overview</p>
+      <h2>At a glance</h2>
+
+      <div class="cs-overview">
+        <div class="cs-overview__item">
+          <h4>My Role</h4>
+          <p>Sole auditor — research, evaluation, recommendations</p>
+        </div>
+        <div class="cs-overview__item">
+          <h4>Context</h4>
+          <p>UX 2 course, University of Colorado Boulder</p>
+        </div>
+        <div class="cs-overview__item">
+          <h4>Methods</h4>
+          <p>Heuristic eval, visual audit, accessibility review, card sort, content analysis</p>
+        </div>
+        <div class="cs-overview__item">
+          <h4>Deliverable</h4>
+          <p>31-page audit report + Figma prototype presentation</p>
+        </div>
+      </div>
+
+      <p class="cs-text">charity: water is a nonprofit whose entire business model depends on one thing: convincing strangers on the internet to give money to a cause they can't physically see. That makes their website not just a marketing tool but a trust-building machine. This audit evaluated how well the site actually delivers on that job — where it earns trust, where it creates friction, and where small design decisions are quietly costing them donors.</p>
+
+      <div class="cs-figma-cta">
+        <div class="cs-figma-cta__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="cs-figma-cta__text">
+          <h4>View the full audit in Figma</h4>
+          <p>Interactive prototype with annotated screenshots and all findings</p>
+        </div>
+        <a href="https://www.figma.com/proto/FlPH2wT4cQ7gNWrUrvCdTS/UX-Audit-Charity-Water?node-id=1-510&p=f&t=6Y6c0m7zo8KPEB1y-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A510&show-proto-sidebar=1" target="_blank" rel="noopener" class="cs-figma-cta__link">Open in Figma →</a>
+      </div>
+
+      <div class="cs-figma-cta" style="background: #fff8f0; border-color: rgba(230,126,34,.2);">
+        <div class="cs-figma-cta__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#e67e22"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        </div>
+        <div class="cs-figma-cta__text">
+          <h4>Watch the audit walkthrough</h4>
+          <p>A recorded walkthrough of the key findings and donation flow evaluation</p>
+        </div>
+        <a href="https://www.loom.com/share/8d00bab035f345b2916b0d79417d887d" target="_blank" rel="noopener" class="cs-figma-cta__link" style="background: #e67e22;">Watch on Loom →</a>
+      </div>
+    </section>
+
+    <!-- 02 SCOPE -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">02 — Scope & Focus</p>
+      <h2>What I audited and why</h2>
+
+      <p class="cs-text">I focused the audit on three pages that represent the full arc of a donor's decision journey:</p>
+
+      <ul class="cs-list">
+        <li><strong>Homepage</strong> — the first impression. Sets the tone, communicates the mission, and either earns or loses the user's attention in the first few seconds.</li>
+        <li><strong>Donate page</strong> — the most critical page on the site. Any friction here directly translates to lost donations and unfulfilled mission impact.</li>
+        <li><strong>Get Involved / Fundraise page</strong> — the depth play. For users who want to go beyond a one-time donation, this page either deepens their relationship with the organization or loses them.</li>
+      </ul>
+
+      <p class="cs-text">The audit covered five dimensions: visual design, heuristic evaluation, accessibility, content quality, and information architecture. Each was evaluated independently and then synthesized into cross-cutting findings.</p>
+
+      <h3>Primary audit question</h3>
+      <div class="cs-quote">
+        <p>Does the charity: water website make it easy for a first-time visitor to understand the mission, feel confident about the organization, and complete a donation — or does the design get in the way?</p>
+        <cite>— Audit objective</cite>
+      </div>
+    </section>
+
+    <!-- 03 VISUAL DESIGN -->
+    <section class="cs-section">
+      <p class="cs-section__label">03 — Visual Design</p>
+      <h2>Strong foundation, a few cracks</h2>
+
+      <p class="cs-text">Overall the visual design is polished and professional. The layout, typography, and color usage are all at a high level for a nonprofit site. But a few specific patterns create friction that the clean aesthetic masks.</p>
+
+      <div class="cs-proscons">
+        <div class="cs-proscons__col">
+          <div class="cs-proscons__head cs-proscons__head--pro">✓ What works</div>
+          <div class="cs-proscons__body">
+            <p class="cs-proscons__item">Clear section structure makes content scannable</p>
+            <p class="cs-proscons__item">Consistent grid with strong alignment throughout</p>
+            <p class="cs-proscons__item">Typography hierarchy is clear — headings, subheadings, and body text are well differentiated</p>
+            <p class="cs-proscons__item">Color contrast is WCAG compliant in most text areas</p>
+            <p class="cs-proscons__item">Buttons and CTAs are consistently styled and easy to identify</p>
+          </div>
+        </div>
+        <div class="cs-proscons__col">
+          <div class="cs-proscons__head cs-proscons__head--con">✗ What doesn't</div>
+          <div class="cs-proscons__body">
+            <p class="cs-proscons__item">Multiple storytelling sections use nearly identical layouts — users lose their sense of where they are while scrolling</p>
+            <p class="cs-proscons__item">Large photos placed near CTAs occasionally pull attention away from the action</p>
+            <p class="cs-proscons__item">Some emphasized text and buttons rely solely on color to signal importance — no secondary cue for color-blind users</p>
+            <p class="cs-proscons__item">Some colored text appears clickable but isn't, creating false affordances</p>
+            <p class="cs-proscons__item">Small decorative icons sit too close to surrounding text, especially on mobile</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>The most important visual issue</h3>
+      <p class="cs-text">The false affordance problem — colored text that looks like a link but isn't — is the one I'd prioritize fixing. It's a direct trust issue. On a site where donor confidence is everything, an element that looks interactive but does nothing trains users to distrust the interface.</p>
+    </section>
+
+    <!-- 04 HEURISTIC -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">04 — Heuristic Evaluation</p>
+      <h2>Where the experience breaks Nielsen's principles</h2>
+
+      <p class="cs-text">I evaluated the site against Nielsen's 10 usability heuristics. Most hold up well — but four specific violations stand out as having real impact on donors.</p>
+
+      <div class="cs-findings">
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--high">High impact</span>
+          <div>
+            <p class="cs-finding__title">Consistency &amp; standards violated — Legacy section breaks the experience</p>
+            <p class="cs-finding__desc">Clicking "Legacy" redirects users to a completely different URL with a different navigation structure and visual design. Users lose their mental model of the site entirely, and there's no obvious way back to the main site. "Home" navigates to the Legacy homepage, not the main charity: water homepage.</p>
+          </div>
+        </div>
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--high">High impact</span>
+          <div>
+            <p class="cs-finding__title">User control &amp; freedom — no back button in donation flow</p>
+            <p class="cs-finding__desc">The multi-step donation flow has no back button. Users who want to change their donation amount or ticket type after advancing a step have no escape route other than the browser back button, which may reset their progress entirely.</p>
+          </div>
+        </div>
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--medium">Medium impact</span>
+          <div>
+            <p class="cs-finding__title">Visibility of system status — no progress indicator in checkout</p>
+            <p class="cs-finding__desc">The donation flow moves through multiple steps (amount → personal info → payment → review) but users are never told how many steps exist or which step they're on. First-time donors in particular are left guessing how much longer the process will take.</p>
+          </div>
+        </div>
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--medium">Medium impact</span>
+          <div>
+            <p class="cs-finding__title">Efficiency of use — repeat donors get the same experience as first-timers</p>
+            <p class="cs-finding__desc">Even logged-in users go through the full story-heavy homepage and the same multi-step checkout rather than a faster authenticated flow. Returning donors who already understand the mission are forced to navigate through content designed to convince strangers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 UX LAWS -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">05 — UX Laws Applied</p>
+      <h2>Naming the principles behind the problems</h2>
+
+      <p class="cs-text">Every finding in this audit maps to an established UX principle. Naming them isn't just academic — it's how you move from "this feels wrong" to "here's why it's wrong and here's the evidence-backed fix."</p>
+
+      <div class="cs-laws">
+        <div class="cs-law">
+          <div class="cs-law__name">
+            <span class="cs-law__label">Law</span>
+            <span class="cs-law__title">Miller's Law</span>
+          </div>
+          <div class="cs-law__body">
+            <p class="cs-law__finding">No progress indicator in the donation flow</p>
+            <p class="cs-law__desc">Miller's Law states that users can only hold 7 (±2) items in working memory at once. When users don't know how many steps remain in a checkout process, they have to expend cognitive resources tracking their position instead of focusing on completing the task. A simple "Step 2 of 3" indicator offloads that tracking entirely — freeing mental capacity for the decision itself.</p>
+          </div>
+        </div>
+        <div class="cs-law">
+          <div class="cs-law__name">
+            <span class="cs-law__label">Law</span>
+            <span class="cs-law__title">Hick's Law</span>
+          </div>
+          <div class="cs-law__body">
+            <p class="cs-law__finding">"Get Involved" and "Take Action" as separate navigation items</p>
+            <p class="cs-law__desc">Hick's Law states that the time it takes to make a decision increases with the number and similarity of choices. Two navigation labels that mean nearly the same thing don't clarify the choice — they double the uncertainty. Card sort participants consistently struggled to differentiate them, confirming that the similarity is creating decision paralysis rather than helpfully organizing content.</p>
+          </div>
+        </div>
+        <div class="cs-law">
+          <div class="cs-law__name">
+            <span class="cs-law__label">Law</span>
+            <span class="cs-law__title">Jakob's Law</span>
+          </div>
+          <div class="cs-law__body">
+            <p class="cs-law__finding">Legacy section breaking navigation consistency + repeat donor experience</p>
+            <p class="cs-law__desc">Jakob's Law states that users spend most of their time on other sites, so they expect your site to work the same way as the ones they already know. The Legacy redirect violates this twice: it breaks the navigation pattern users just learned on the main site, and it removes the "Home" escape route they rely on. Returning donors are also affected — they've built a mental model of the internet's standard donation flow, and being forced through a story-heavy homepage each visit violates that expectation.</p>
+          </div>
+        </div>
+        <div class="cs-law">
+          <div class="cs-law__name">
+            <span class="cs-law__label">Law</span>
+            <span class="cs-law__title">Law of Affordance</span>
+          </div>
+          <div class="cs-law__body">
+            <p class="cs-law__finding">Colored non-clickable text that looks like a link</p>
+            <p class="cs-law__desc">Affordances communicate what an object can do. Colored text on the web has one strong affordance: it's a link, and it's clickable. When that expectation is violated — when colored text goes nowhere — users learn to distrust the interface. On a site where donor confidence is critical, anything that erodes trust has a cost that's disproportionate to how small the design error seems.</p>
+          </div>
+        </div>
+        <div class="cs-law">
+          <div class="cs-law__name">
+            <span class="cs-law__label">Law</span>
+            <span class="cs-law__title">Fitts's Law</span>
+          </div>
+          <div class="cs-law__body">
+            <p class="cs-law__finding">Subtle focus indicators and small interactive targets on the donation form</p>
+            <p class="cs-law__desc">Fitts's Law states that the time to reach a target is a function of its size and distance. On the donation form, elements that are small or visually unclear — like the nearly invisible keyboard focus indicator — increase the cost of interaction for all users, and make some interactions effectively impossible for keyboard and screen reader users.</p>
+          </div>
+        </div>
+        <div class="cs-law">
+          <div class="cs-law__name">
+            <span class="cs-law__label">Law</span>
+            <span class="cs-law__title">Peak-End Rule</span>
+          </div>
+          <div class="cs-law__body">
+            <p class="cs-law__finding">Payment failure experience and the "are you sure?" interstitial</p>
+            <p class="cs-law__desc">The Peak-End Rule states that people judge an experience by its most intense moment and its ending — not the average. The donation flow's ending is its most important moment. An abrupt payment failure with no recovery guidance, or an "are you sure you don't want to give monthly?" interstitial right before completion, makes the peak and end of the experience feel adversarial rather than grateful. That's the memory donors take away.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 ACCESSIBILITY -->
+    <section class="cs-section">
+      <p class="cs-section__label">06 — Accessibility</p>
+      <h2>Good intent, inconsistent execution</h2>
+
+      <p class="cs-text">There's a particular irony in a humanitarian organization's website having accessibility gaps. charity: water's mission is about reaching people others have overlooked — that principle should extend to how the site treats users with disabilities.</p>
+
+      <div class="cs-findings">
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--high">High impact</span>
+          <div>
+            <p class="cs-finding__title">Donation form fields announced incorrectly by screen readers</p>
+            <p class="cs-finding__desc">The donation amount selector announces "100, USD, mo" as three separate items rather than as a single composed field. A screen reader user navigating the form hears a confusing sequence of values without context for how they relate. The fields also don't clearly signal that they're interactive.</p>
+          </div>
+        </div>
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--medium">Medium impact</span>
+          <div>
+            <p class="cs-finding__title">Focus indicators are too subtle for keyboard-only users</p>
+            <p class="cs-finding__desc">Keyboard navigation works technically, but the visual focus indicator on many elements is so subtle it's nearly invisible. A user navigating without a mouse has almost no visual feedback about which element is currently focused — making the "past years" date selector completely unusable via keyboard.</p>
+          </div>
+        </div>
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--low">Lower impact</span>
+          <div>
+            <p class="cs-finding__title">Storytelling images may lack descriptive alt text</p>
+            <p class="cs-finding__desc">Several large storytelling images — which are central to the site's emotional appeal — may not have descriptive alt text. Screen reader users miss the emotional context that sighted users get from those images, which is a significant gap on a site that relies heavily on visual storytelling.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 IA -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">07 — Information Architecture</p>
+      <h2>Card sorting revealed a navigation labeling problem</h2>
+
+      <p class="cs-text">To test whether the site's navigation structure matched users' mental models, I ran a closed card sorting exercise with 2 participants. They were given content cards representing pages and features and asked to sort them into the existing navigation categories.</p>
+
+      <h3>What I found</h3>
+
+      <div class="cs-findings">
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--high">Key finding</span>
+          <div>
+            <p class="cs-finding__title">"Get Involved" and "Take Action" are indistinguishable</p>
+            <p class="cs-finding__desc">Both participants struggled to differentiate these two navigation categories and placed cards inconsistently between them. The labels are nearly synonymous to a first-time visitor — they suggest the same type of action without distinguishing what's actually different about each section.</p>
+          </div>
+        </div>
+        <div class="cs-finding">
+          <span class="cs-finding__severity cs-finding__severity--medium">Key finding</span>
+          <div>
+            <p class="cs-finding__title">Jargon labels like "Experience Lab" and "Stream for Us" confused participants</p>
+            <p class="cs-finding__desc">Internal terminology that makes sense to the charity: water team doesn't translate to first-time visitors. Participants couldn't predict what content lived under these labels without prior knowledge of the site — which means they'd either avoid them or explore inefficiently.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-quote">
+        <p>"I wasn't sure if 'Get Involved' and 'Take Action' were the same thing or different things. I kind of just picked one."</p>
+        <cite>— Card sort participant</cite>
+      </div>
+
+      <p class="cs-text">The underlying structure of the site is solid — participants understood the broad categories once they were explained. The problem is labeling, not architecture. Renaming "Take Action" to something more specific, like "Fundraise" or "Campaigns," would resolve most of the confusion.</p>
+    </section>
+
+    <!-- 07 CONTENT -->
+    <section class="cs-section">
+      <p class="cs-section__label">08 — Content Evaluation</p>
+      <h2>Compelling storytelling that occasionally gets in its own way</h2>
+
+      <p class="cs-text">The content on charity: water is genuinely good — the tone is human, the mission is clear, and the emotional storytelling is effective. The problem is structural: the site optimizes for first-time visitors discovering the cause, but not for goal-oriented users who already want to donate.</p>
+
+      <div class="cs-proscons">
+        <div class="cs-proscons__col">
+          <div class="cs-proscons__head cs-proscons__head--pro">✓ What works</div>
+          <div class="cs-proscons__body">
+            <p class="cs-proscons__item">Mission statement is immediately visible and clearly articulated</p>
+            <p class="cs-proscons__item">Conversational tone lowers the barrier for first-time donors</p>
+            <p class="cs-proscons__item">CTA buttons are concise and action-oriented ("Donate", "Give")</p>
+            <p class="cs-proscons__item">Impact statistics and transparency reports build donor confidence</p>
+            <p class="cs-proscons__item">No technical jargon — accessible to a broad audience</p>
+          </div>
+        </div>
+        <div class="cs-proscons__col">
+          <div class="cs-proscons__head cs-proscons__head--con">✗ What doesn't</div>
+          <div class="cs-proscons__body">
+            <p class="cs-proscons__item">Long narrative sections slow users who just want to donate</p>
+            <p class="cs-proscons__item">Donation prompts appear before users have enough context — creating hesitation rather than encouraging action</p>
+            <p class="cs-proscons__item">Error messages say "This field is required" without explaining what's wrong or how to fix it</p>
+            <p class="cs-proscons__item">Repeated CTAs throughout the page can feel pushy before trust is established</p>
+            <p class="cs-proscons__item">The "are you sure you don't want to donate monthly?" interstitial adds friction at the worst possible moment</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 RECOMMENDATIONS -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">09 — Recommendations</p>
+      <h2>If I could change six things</h2>
+
+      <p class="cs-text">Not all findings are equal. These are the changes I'd prioritize, ordered by impact on the primary goal: completing a donation.</p>
+
+      <div class="cs-recs">
+        <div class="cs-rec">
+          <p class="cs-rec__priority">Priority 1</p>
+          <p class="cs-rec__title">Add a progress indicator to the donation flow</p>
+          <p class="cs-rec__desc">A simple "Step 2 of 3" indicator would reduce uncertainty and abandonment for first-time donors. It's the single highest-impact change for the lowest implementation cost.</p>
+        </div>
+        <div class="cs-rec">
+          <p class="cs-rec__priority">Priority 2</p>
+          <p class="cs-rec__title">Add a back button to every checkout step</p>
+          <p class="cs-rec__desc">Users need to feel in control of the process. Trapping them at a step with no back button creates anxiety — exactly the wrong emotion at the moment of financial commitment.</p>
+        </div>
+        <div class="cs-rec">
+          <p class="cs-rec__priority">Priority 3</p>
+          <p class="cs-rec__title">Fix the Legacy navigation break</p>
+          <p class="cs-rec__desc">The Legacy redirect to a different site with different navigation is a significant consistency violation. At minimum, ensure the "Home" link in the Legacy section returns to the main charity: water homepage.</p>
+        </div>
+        <div class="cs-rec">
+          <p class="cs-rec__priority">Priority 4</p>
+          <p class="cs-rec__title">Strengthen donation form accessibility</p>
+          <p class="cs-rec__desc">Fix the screen reader announcement of the donation amount field, improve focus indicators on interactive elements, and ensure all storytelling images have meaningful alt text.</p>
+        </div>
+        <div class="cs-rec">
+          <p class="cs-rec__priority">Priority 5</p>
+          <p class="cs-rec__title">Rename "Take Action" to something specific</p>
+          <p class="cs-rec__desc">"Fundraise", "Campaigns", or "Events" would instantly reduce navigation confusion without any structural change to the site.</p>
+        </div>
+        <div class="cs-rec">
+          <p class="cs-rec__priority">Priority 6</p>
+          <p class="cs-rec__title">Create a faster flow for returning donors</p>
+          <p class="cs-rec__desc">Logged-in users shouldn't need to scroll through mission content they already know. A streamlined authenticated donation flow with saved payment details would improve retention.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 REFLECTION -->
+    <div class="cs-reflection">
+      <h3>What this audit taught me</h3>
+      <p>The most interesting tension I found in this project was between charity: water's two competing goals: inspiring new donors through emotional storytelling, and enabling goal-oriented users to donate quickly. These aren't naturally compatible — and the site's current design optimizes heavily for the first at the expense of the second.</p>
+      <p>It made me think carefully about how design decisions that are correct for one user type can create friction for another. The solution isn't to strip out the storytelling — it's what makes the site compelling. The solution is to create clearer pathways that let goal-oriented users bypass it when they want to. That's a design problem, not a content problem.</p>
+    </div>
+
+    <div class="cs-footer">
+      <a href="ux-projects.html" class="cs-footer__btn">← Back to UX Projects</a>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__copy">© 2025 Chloe Cook</p>
+      <a class="footer__logo" href="index.html">CC</a>
+    </div>
+  </footer>
+
+</body>
+</html>

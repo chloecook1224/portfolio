@@ -1,433 +1,937 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Chloe Cook - Portfolio</title>
+  <title>Chloe Cook — UX Designer & Developer</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Chloe Cook — UX Designer & Developer creating research-driven digital experiences.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Merriweather+Sans:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
   <style>
-    /* Additional styles for the new layout */
-    .featured-projects {
-      padding: 80px 0;
-      background-color: #f9f9f9;
+
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #557851;
+      --green-light: #6b9165;
+      --green-pale:  #f0f5ee;
+      --ink:         #1a1a1a;
+      --ink-mid:     #585858;
+      --ink-soft:    #757575;
+      --surface:     #f9f9f6;
+      --white:       #ffffff;
+      --accent:      #6882f6;
+      --border:      rgba(0,0,0,0.08);
+      --transition:  .25s cubic-bezier(.4,0,.2,1);
     }
-    
-    .featured-projects__header {
-      text-align: center;
-      margin-bottom: 60px;
+
+    body {
+      font-family: "Merriweather Sans", sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    
-    .featured-projects__title {
-      font-size: 42px;
-      color: #222;
-      margin-bottom: 15px;
-    }
-    
-    .featured-projects__subtitle {
-      font-size: 16px;
-      color: #757575;
-    }
-    
-    .project-categories {
-      padding: 80px 0;
-    }
-    
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      max-width: 1170px;
-      margin: 0 auto;
-      padding: 0 40px;
-    }
-    
-    .category-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-      display: block;
-    }
-    
-    .category-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-    
-    .category-card__image {
-      width: 100%;
-      height: 300px;
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .category-card__content {
-      padding: 40px;
-    }
-    
-    .category-card__title {
-      font-size: 32px;
-      color: #222;
-      margin-bottom: 15px;
-      font-weight: 800;
-    }
-    
-    .category-card__description {
-      font-size: 16px;
-      color: #757575;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    
-    .category-card__count {
-      font-size: 14px;
-      color: #557851;
+
+    a { color: var(--green); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    p { margin-bottom: 1.1em; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ─── UTILITY ─── */
+    .wrapper { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 768px) { .wrapper { padding: 0 20px; } }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
       font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: var(--green-pale);
+      padding: 4px 10px;
+      border-radius: 20px;
     }
-    
-    .category-card--ux .category-card__image {
-      background-image: url('assets/img/highfi-v2-homepage.jpg');
-      background-size: cover;
-      background-position: center;
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 68px;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
     }
-    
-    .category-card--personal .category-card__image {
-      background-image: url('assets/img/zoo-pet-preview.jpg');
-      background-size: cover;
-      background-position: center;
+
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
     }
-    
-    @media (max-width: 768px) {
-      .category-grid {
-        grid-template-columns: 1fr;
-        padding: 0 20px;
-      }
-      
-      .category-card__image {
-        height: 200px;
-      }
-      
-      .category-card__content {
-        padding: 30px;
-      }
+
+    .nav__logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.01em;
     }
-    
-    /* Zoo section with side-by-side layout */
-    .web-design--zoo {
+
+    .nav__links {
+      display: flex; gap: 36px; list-style: none;
+    }
+
+    .nav__links a {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      transition: color var(--transition);
+    }
+
+    .nav__links a:hover { color: var(--green); }
+
+    @media (max-width: 640px) {
+      .nav__links { display: none; }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 160px 0 100px;
       position: relative;
       overflow: hidden;
-      padding: 120px 0 180px 0;
-      background-color: #f9f9f9;
     }
-    
-    .web-design__wrapper--zoo {
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -120px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #e8f0e6 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero__eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .hero__eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px; height: 2px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+
+    .hero__headline {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(46px, 7vw, 84px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .hero__headline em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero__sub {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 540px;
+      margin-bottom: 44px;
+    }
+
+    .hero__ctas {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+
+    .btn--primary {
+      background: var(--green);
+      color: #fff;
+      border: 2px solid var(--green);
+    }
+    .btn--primary:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+    }
+    .btn--outline:hover {
+      background: var(--green-pale);
+    }
+
+    .hero__scroll {
+      margin-top: 80px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .hero__scroll-line {
+      width: 40px; height: 1px;
+      background: var(--ink-soft);
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 52px;
+      gap: 20px;
+    }
+
+    .section-header__left {}
+
+    .section-title {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      line-height: 1.1;
+      margin-top: 12px;
+    }
+
+    .section-link {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--green);
+      white-space: nowrap;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid var(--green);
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .section-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ─── FEATURED PROJECTS ─── */
+    .featured {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ─── PROJECT CARDS ─── */
+    .projects-list {
+      display: flex; flex-direction: column; gap: 24px;
+    }
+
+    .project-card {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      max-width: 1170px;
-      margin: 0 auto;
-      padding: 0 0 0 0;
-      box-sizing: border-box;
+      gap: 0;
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow var(--transition), transform var(--transition);
     }
-    
-    .web-design--zoo .web-design__content {
-      align-self: start;
+
+    .project-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,.1);
+      transform: translateY(-3px);
     }
-    
-    .web-design--zoo .blurb__heading {
-      margin-bottom: 15px;
+
+    .project-card--reverse {
+      direction: rtl;
     }
-    
-    .web-design--zoo .blurb__copy--tight {
+
+    .project-card--reverse > * { direction: ltr; }
+
+    .project-card__img {
+      height: 380px;
+      background-size: cover;
+      background-position: center top;
+      background-color: var(--green-pale);
+    }
+
+    .project-card__body {
+      padding: 52px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .project-card__meta {
+      display: flex; gap: 8px; flex-wrap: wrap;
       margin-bottom: 20px;
     }
-    
-    .web-design__image-container {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      transform: perspective(1000px) rotateY(-5deg);
-      transition: transform 0.3s ease;
-      box-sizing: border-box;
+
+    .project-card__title {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
     }
-    
-    .web-design__image-container:hover {
-      transform: perspective(1000px) rotateY(-2deg);
+
+    .project-card__desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      margin-bottom: 0;
     }
-    
-    .web-design__image-container img {
-      width: 100%;
-      height: auto;
+
+    /* ─── STAT PILLS ─── */
+    .project-stats {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    .stat-pill {
+      background: var(--green-pale);
+      border-radius: 8px;
+      padding: 10px 16px;
+    }
+
+    .stat-pill__value {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
       display: block;
     }
-    
-    /* Responsive for zoo section */
-    @media (max-width: 991px) {
-      .web-design--zoo {
-        padding: 60px 0;
-        overflow-x: hidden;
+
+    .stat-pill__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .project-card__cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 28px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green);
+      border-bottom: 1.5px solid var(--green);
+      padding-bottom: 2px;
+      width: fit-content;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .project-card:hover .project-card__cta {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .project-card,
+      .project-card--reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
       }
-      
-      .web-design__wrapper--zoo {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 20px;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-      
-      .web-design--zoo .web-design__content {
-        width: 100%;
-        max-width: 100%;
-        text-align: center;
-        margin-bottom: 40px;
-        box-sizing: border-box;
-      }
-      
-      .web-design--zoo .blurb__heading {
-        font-size: 36px;
-        word-wrap: break-word;
-      }
-      
-      .web-design--zoo .blurb__copy--tight {
-        max-width: 100%;
-        margin: 0 auto 20px auto;
-      }
-      
-      .web-design__image-container {
-        transform: none;
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        box-sizing: border-box;
-      }
-      
-      .web-design__image-container img {
-        width: 100%;
-        height: auto;
+      .project-card__img { height: 240px; }
+      .project-card__body { padding: 36px 32px; }
+    }
+
+    /* ─── CATEGORY CARDS ─── */
+    .categories {
+      padding: 100px 0;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .cat-card {
+      display: block;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .cat-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,.1);
+      transform: translateY(-4px);
+    }
+
+    .cat-card__img {
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--green-pale);
+    }
+
+    .cat-card__body {
+      padding: 36px 40px;
+      background: var(--white);
+    }
+
+    .cat-card__title {
+      font-family: "Instrument Serif", serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      margin: 12px 0 10px;
+    }
+
+    .cat-card__desc {
+      font-size: 15px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .cat-card__link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 640px) {
+      .cat-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ABOUT / QUOTE ─── */
+    .about {
+      padding: 100px 0;
+      background: var(--ink);
+    }
+
+    .about__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about__quote {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 400;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .about__attr {
+      margin-top: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green-light);
+    }
+
+    .about__copy {
+      color: rgba(255,255,255,.65);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .about__copy strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .about__inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
       }
     }
-    
-    @media (max-width: 767px) {
-      .web-design--zoo {
-        padding: 40px 0 60px 0;
-      }
-      
-      .web-design__wrapper--zoo {
-        padding: 0 15px;
-      }
-      
-      .web-design--zoo .blurb__heading {
-        font-size: 28px;
-        line-height: 1.2;
-      }
-      
-      .web-design--zoo .blurb__copy--tight {
-        font-size: 14px;
-      }
+
+    /* ─── LINKS / BLOG ─── */
+    .links-section {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
     }
-    
-    @media (max-width: 480px) {
-      .web-design--zoo .blurb__heading {
-        font-size: 24px;
-      }
-      
-      .web-design__wrapper--zoo {
-        padding: 0 10px;
-      }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 0;
     }
+
+    .link-card {
+      display: flex; flex-direction: column;
+      gap: 16px;
+      padding: 32px 28px;
+      background: var(--white);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .link-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+      transform: translateY(-3px);
+    }
+
+    .link-card__icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--green-pale);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .link-card__icon img { width: 40px; height: 40px; object-fit: contain; }
+
+    .link-card__title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .link-card__desc {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      flex: 1;
+      margin: 0;
+    }
+
+    .link-card__cta {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      border-bottom: 1.5px solid var(--green);
+      padding-bottom: 1px;
+      width: fit-content;
+      transition: color var(--transition);
+    }
+
+    .link-card:hover .link-card__cta { color: var(--accent); border-color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .links-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      padding: 120px 0;
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-inner__heading {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .contact-inner__sub {
+      font-size: 16px;
+      color: var(--ink-soft);
+      margin-bottom: 36px;
+    }
+
+    .contact-inner__email {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 3px;
+      transition: color var(--transition);
+    }
+
+    .contact-inner__email:hover { color: var(--accent); border-color: var(--accent); }
+
+    .contact-inner__img img {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contact-inner__img { display: none; }
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center;
+    }
+
+    .footer__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+    }
+
+    .footer__copy {
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .footer__logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 22px;
+      color: var(--ink);
+    }
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero__eyebrow  { animation: fadeUp .6s .1s both; }
+    .hero__headline { animation: fadeUp .7s .2s both; }
+    .hero__sub      { animation: fadeUp .7s .35s both; }
+    .hero__ctas     { animation: fadeUp .7s .5s both; }
+    .hero__scroll   { animation: fadeUp .7s .65s both; }
+
   </style>
 </head>
 <body>
 
-  <!-- SECTION: Navigation -->
-  <div id="top" class="navigation">
-    <div class="navigation__wrapper wrapper--large">
-      <a class="navigation__logo logo" href="#">CC</a>
-      <nav class="navigation__container">
-        <ul class="navigation__list">
-          <li><a href="#featured">Featured</a></li>
-          <li><a href="ux-projects.html">UX PROJECTS</a></li>
-          <li><a href="personal-projects.html">PERSONAL PROJECTS</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      
-      <div class="navigation__burger">
-        <span class="navigation__burger-el navigation__burger-el--top"></span>
-        <span class="navigation__burger-el navigation__burger-el--middle"></span>
-        <span class="navigation__burger-el navigation__burger-el--bottom"></span>
-      </div>
+  <!-- ── NAV ── -->
+  <nav class="nav" id="top">
+    <div class="wrapper nav__inner">
+      <a class="nav__logo" href="#">Chloe Cook</a>
+      <ul class="nav__links">
+        <li><a href="#featured">Work</a></li>
+        <li><a href="ux-projects.html">UX Projects</a></li>
+        <li><a href="personal-projects.html">Personal</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
-  </div>
-  <!-- END SECTION: Navigation -->
+  </nav>
 
-  <!-- SECTION: Intro -->
-  <header class="header">
-    <div class="introduction">
-      <h1 class="introduction__content">
-        <span class="introduction__content-el introduction__content-el--naxe">Chloe Cook</span>
-        <span class="introduction__content-el introduction__content-el--description">Portfolio</span>
-        <span class="introduction__content-el introduction__content-el--job">Designer & Developer</span>
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="wrapper">
+      <p class="hero__eyebrow">UX Designer &amp; Developer</p>
+
+      <h1 class="hero__headline">
+        Designing intuitive<br>
+        experiences for<br>
+        <em>real people.</em>
       </h1>
-      <svg class="introduction__arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0" y="0" viewBox="0 0 130 65" xml:space="preserve" enable-background="new 0 0 130 65">
-        <g transform="translate(0.000000,65.000000) scale(0.100000,-0.100000)">
-          <path d="M22.2 634c-50-35-40-47 293-349 174-157 323-285 333-285 24 0 635 552 647 585 8 23 6 30-14 46 -13 10-31 19-40 19s-57-37-107-83c-50-45-179-162-287-260l-197-179 -147 134c-319 289-433 388-446 388C50.2 650 34.2 643 22.2 634z"/>
-        </g>
-      </svg>
+
+      <p class="hero__sub">
+        I blend user research, interaction design, and front-end development
+        to create products that are accessible, purposeful, and enjoyable to use.
+      </p>
+
+      <div class="hero__ctas">
+        <a href="#featured" class="btn btn--primary">View My Work</a>
+        <a href="#contact" class="btn btn--outline">Get in Touch</a>
+      </div>
+
+      <div class="hero__scroll">
+        <span class="hero__scroll-line"></span>
+        Scroll to explore
+      </div>
     </div>
   </header>
-  <!-- END SECTION: Intro -->
 
-  <main role="main">
-    <!-- SECTION: Featured Projects -->
-    <section id="featured" class="featured-projects">
-      <div class="featured-projects__header">
-        <h2 class="featured-projects__title">Featured Work</h2>
-        <p class="featured-projects__subtitle">A selection of my most recent projects</p>
+  <main>
+
+    <!-- ── FEATURED WORK ── -->
+    <section id="featured" class="featured">
+      <div class="wrapper">
+        <div class="section-header">
+          <div class="section-header__left">
+            <span class="tag">Selected Work</span>
+            <h2 class="section-title">Featured Projects</h2>
+          </div>
+          <a href="ux-projects.html" class="section-link">All UX Projects →</a>
+        </div>
+
+        <div class="projects-list">
+
+          <!-- Project 1: Cheyenne Mountain Zoo -->
+          <a href="zoo-case-study.html" class="project-card">
+            <div class="project-card__img" style="background-image: url('assets/img/highfi-v2-homepage.png');"></div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="tag">UX Research</span>
+                <span class="tag">Figma</span>
+                <span class="tag">Case Study</span>
+              </div>
+              <h3 class="project-card__title">Cheyenne Mountain Zoo Redesign</h3>
+              <p class="project-card__desc">
+                Redesigned the zoo's website to reduce checkout friction and improve visitor planning.
+                Conducted usability testing with 5 participants, uncovering navigation pain points
+                that led to a streamlined 4-step purchase flow.
+              </p>
+              <div class="project-stats">
+                <div class="stat-pill">
+                  <span class="stat-pill__value">7→4</span>
+                  <span class="stat-pill__label">Steps to checkout</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="stat-pill__value">8 min→3 min</span>
+                  <span class="stat-pill__label">Avg. purchase time</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="stat-pill__value">100%</span>
+                  <span class="stat-pill__label">Task completion</span>
+                </div>
+              </div>
+              <span class="project-card__cta">View Case Study →</span>
+            </div>
+          </a>
+
+          <!-- Project 2: NearlyHuman -->
+          <a href="nearly-human.html" class="project-card project-card--reverse">
+            <div class="project-card__img" style="background-image: url('assets/img/dvnh1.png');"></div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="tag">Internship</span>
+                <span class="tag">Information Architecture</span>
+                <span class="tag">Figma</span>
+              </div>
+              <h3 class="project-card__title">NearlyHuman Documents &amp; Versioning</h3>
+              <p class="project-card__desc">
+                Designed a scalable document management system for LLM training workflows at NearlyHuman.
+                Created distinct Manager and Developer views, restructured information architecture,
+                and iterated across multiple high-fidelity rounds based on engineering and stakeholder feedback.
+              </p>
+              <div class="project-stats">
+                <div class="stat-pill">
+                  <span class="stat-pill__value">2</span>
+                  <span class="stat-pill__label">User types designed for</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="stat-pill__value">Intern</span>
+                  <span class="stat-pill__label">Role at NearlyHuman</span>
+                </div>
+              </div>
+              <span class="project-card__cta">View Case Study →</span>
+            </div>
+          </a>
+
+          <!-- Project 3: Zoo Pet Extension -->
+          <a href="https://chromewebstore.google.com/detail/zoopetextension/epanbdfbelfdkpnhejfchfjombpkdeio" target="_blank" rel="noopener" class="project-card">
+            <div class="project-card__img" style="background-image: url('assets/img/Pets.png'); background-position: center;"></div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="tag">Chrome Extension</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Published</span>
+              </div>
+              <h3 class="project-card__title">Zoo Pet Extension</h3>
+              <p class="project-card__desc">
+                Built and published a Chrome Web Store extension that lets users adopt and care for
+                a virtual panda, hippo, or tiger in their browser. Designed the full UI and implemented
+                game logic — a personal project bridging design and development.
+              </p>
+              <div class="project-stats">
+                <div class="stat-pill">
+                  <span class="stat-pill__value">Live</span>
+                  <span class="stat-pill__label">Chrome Web Store</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="stat-pill__value">3</span>
+                  <span class="stat-pill__label">Adoptable animals</span>
+                </div>
+              </div>
+              <span class="project-card__cta">View on Chrome Store →</span>
+            </div>
+          </a>
+
+        </div>
       </div>
-      
-    
-      <!-- Zoo Case Study -->
-      <section class="web-design web-design--zoo">
-        <div class="web-design__wrapper wrapper--large web-design__wrapper--zoo">
-          <div class="web-design__content blurb">
-            <h2 class="blurb__heading">Cheyenne Mountain Zoo Redesign</h2>
-            <p class="blurb__copy blurb__copy--tight">UX case study redesigning the zoo's website for better user experience, improved navigation, and enhanced visitor engagement.</p>
-            <a class="transform-link" href="zoo-case-study.html">Check it out</a>
-          </div>
-          <div class="web-design__image-container">
-            <img src="assets/img/highfi-v2-homepage.png" alt="Zoo Website Redesign">
-          </div>
-        </div>
-      </section>
-      
-      <!-- Zoo Pet Extension -->
-      <section class="app-design">
-        <div class="app-design__wrapper wrapper--large">
-          <div class="app-design__content blurb">
-            <h2 class="blurb__heading">Zoo Pet<br>Extension</h2>
-            <p class="blurb__copy blurb__copy--tight">My very own Chrome Web Store app! Take care of your very own panda, hippo or tiger!</p>
-            <a class="transform-link" href="https://chromewebstore.google.com/detail/zoopetextension/epanbdfbelfdkpnhejfchfjombpkdeio">Check it out</a>
-          </div>
-        </div>
-        <figure class="app-design__visual"></figure>
-      </section>
     </section>
-    <!-- END SECTION: Featured Projects -->
 
-    <!-- SECTION: Project Categories -->
-    <section id="projects" class="project-categories">
-      <div class="category-grid">
-        <a href="ux-projects.html" class="category-card category-card--ux">
-          <div class="category-card__image" style="background-image: url('assets/img/highfi-v2-homepage.png'); background-size: cover; background-position: center; background-color: #557851;">
-        </div>
-          <div class="category-card__content">
-            <h3 class="category-card__title">UX Projects</h3>
-            <p class="category-card__description">User experience design, research, and case studies focused on creating intuitive digital experiences.</p>
-            <span class="category-card__count">View all projects →</span>
+    <!-- ── CATEGORY BROWSE ── -->
+    <section class="categories">
+      <div class="wrapper">
+        <div class="section-header">
+          <div class="section-header__left">
+            <span class="tag">Browse by Type</span>
+            <h2 class="section-title">All Projects</h2>
           </div>
-        </a>
-        
-        <a href="personal-projects.html" class="category-card category-card--personal">
-      <div class="category-card__image" style="background-image: url('assets/img/Pets.png'); background-size: cover; background-position: center; background-color: #557851;">
         </div>
-          <div class="category-card__content">
-            <h3 class="category-card__title">Personal Projects</h3>
-            <p class="category-card__description">Creative coding, hardware projects, 3D modeling, and other experiments.</p>
-            <span class="category-card__count">View all projects →</span>
-          </div>
-        </a>
+
+        <div class="cat-grid">
+          <a href="ux-projects.html" class="cat-card">
+            <div class="cat-card__img" style="background-image: url('assets/img/highfi-v2-homepage.png');"></div>
+            <div class="cat-card__body">
+              <span class="tag">UX</span>
+              <h3 class="cat-card__title">UX Projects</h3>
+              <p class="cat-card__desc">Research-driven design, usability testing, information architecture, and end-to-end case studies.</p>
+              <span class="cat-card__link">View all UX work →</span>
+            </div>
+          </a>
+
+          <a href="personal-projects.html" class="cat-card">
+            <div class="cat-card__img" style="background-image: url('assets/img/Pets.png');"></div>
+            <div class="cat-card__body">
+              <span class="tag">Personal</span>
+              <h3 class="cat-card__title">Personal Projects</h3>
+              <p class="cat-card__desc">Chrome extensions, Arduino hardware, 3D modeling, CAD fabrication, and creative coding experiments.</p>
+              <span class="cat-card__link">View personal work →</span>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
-    <!-- END SECTION: Project Categories -->
 
-    <!-- SECTION: Quote -->
+    <!-- ── ABOUT / QUOTE ── -->
     <section class="about">
-      <div class="about__wrapper wrapper--small">
-        <div class="about__content">
-          <div class="about__content-blurb blurb blurb--framed">
-            <h2 class="blurb__heading">Getting to the top is optional. Getting down is mandatory. <br>Mind over matter.<br></h2>
-            <p class="blurb__copy no-margin">-Ed Viesturs</p>
+      <div class="wrapper">
+        <div class="about__inner">
+          <div>
+            <blockquote class="about__quote">
+              "Getting to the top is optional. Getting down is mandatory. Mind over matter."
+            </blockquote>
+            <p class="about__attr">— Ed Viesturs</p>
+          </div>
+          <div>
+            <p class="about__copy">
+              I'm a <strong>designer and developer</strong> who believes the best experiences
+              come from genuine curiosity about how people think and what they need.
+            </p>
+            <p class="about__copy">
+              My work spans <strong>UX research, interaction design, and front-end development</strong> —
+              from redesigning zoo websites to designing LLM training tools during my internship at NearlyHuman.
+            </p>
+            <p class="about__copy">
+              When I'm not designing, I'm building Chrome extensions, crafting furniture from CAD sketches,
+              or exploring new technologies just to see what's possible.
+            </p>
           </div>
         </div>
       </div>
     </section>
-    <!-- END SECTION: Quote -->
 
-    <!-- SECTION: Blog -->
-    <section id="blog" class="blog">
-      <h2 class="blog__heading title">My Links</h2>
-      <div class="blog__wrapper wrapper--large">
-        <article class="blog__post">
-          <div class="blog__post-thumbnail">
-            <img src="assets/img/github-mark.png" alt="Github image">
+    <!-- ── LINKS ── -->
+    <section class="links-section">
+      <div class="wrapper">
+        <div class="section-header">
+          <div class="section-header__left">
+            <span class="tag">Find Me Online</span>
+            <h2 class="section-title">My Links</h2>
           </div>
-          <div class="blog__post-excerpt">
-            <h3>Github</h3>
-            <p>All of my coding projects in one space.</p>
-            <a class="transform-link" href="https://github.com/chloecook1224">Check it out</a>
-          </div>
-        </article>
-        <article class="blog__post">
-          <div class="blog__post-thumbnail">
-            <img src="assets/img/419678-1x1_SoundCloudLogo_wordmark-341a25-original-1645807040.jpg" alt="SoundCloud image">
-          </div>
-          <div class="blog__post-excerpt">
-            <h3>SoundCloud</h3>
-            <p>Where I experimented with audio effects and music.</p>
-            <a class="transform-link" href="#">Check it out</a>
-          </div>
-        </article>
-        <article class="blog__post">
-          <div class="blog__post-thumbnail">
-            <img src="assets/img/blog.png" alt="Blog image">
-          </div>
-          <div class="blog__post-excerpt">
-            <h3>Blog</h3>
-            <p>My blog's done in my classes in Australia!</p>
-            <a class="transform-link" href="https://bcm26.wordpress.com/">Check it out</a>
-          </div>
-        </article>
-      </div>
-    </section>
-    <!-- END SECTION: Blog -->
-
-    <!-- SECTION: Contact -->
-    <section id="contact" class="contact">
-      <h2 class="contact__heading title">Contact Me</h2>
-      <div class="contact__wrapper wrapper--large">
-        <div class="contact__visual">
-          <img src="assets/img/mail3.png" alt="Email image">
         </div>
-        <form class="contact__form">
-          <p><h3>chloecook1224@gmail.com</h3></p>
-        </form>
+
+        <div class="links-grid">
+          <a href="https://github.com/chloecook1224" target="_blank" rel="noopener" class="link-card">
+            <div class="link-card__icon">
+              <img src="assets/img/github-mark.png" alt="GitHub">
+            </div>
+            <div class="link-card__title">GitHub</div>
+            <p class="link-card__desc">All my coding projects in one place — extensions, tools, and experiments.</p>
+            <span class="link-card__cta">Visit GitHub →</span>
+          </a>
+
+          <a href="#" class="link-card">
+            <div class="link-card__icon">
+              <img src="assets/img/419678-1x1_SoundCloudLogo_wordmark-341a25-original-1645807040.jpg" alt="SoundCloud">
+            </div>
+            <div class="link-card__title">SoundCloud</div>
+            <p class="link-card__desc">Where I experimented with audio effects and music production.</p>
+            <span class="link-card__cta">Visit SoundCloud →</span>
+          </a>
+
+          <a href="https://bcm26.wordpress.com/" target="_blank" rel="noopener" class="link-card">
+            <div class="link-card__icon">
+              <img src="assets/img/blog.png" alt="Blog">
+            </div>
+            <div class="link-card__title">Blog</div>
+            <p class="link-card__desc">Written reflections from my semester studying design in Australia.</p>
+            <span class="link-card__cta">Read the Blog →</span>
+          </a>
+        </div>
       </div>
     </section>
-    <!-- END SECTION: Contact -->
+
+    <!-- ── CONTACT ── -->
+    <section id="contact" class="contact-section">
+      <div class="wrapper">
+        <div class="contact-inner">
+          <div>
+            <h2 class="contact-inner__heading">Let's work<br>together.</h2>
+            <p class="contact-inner__sub">
+              I'm currently looking for UX design opportunities. Whether you have a project,
+              a question, or just want to say hello — I'd love to hear from you.
+            </p>
+            <a href="mailto:chloecook1224@gmail.com" class="contact-inner__email">
+              chloecook1224@gmail.com
+            </a>
+          </div>
+          <div class="contact-inner__img">
+            <img src="assets/img/mail3.png" alt="Get in touch">
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- SECTION: Footer -->
+  <!-- ── FOOTER ── -->
   <footer class="footer">
-    <div class="footer__wrapper wrapper--large">
-      <p class="footer__copyright no-margin">&copy; 2025 Chloe</p>
-      <a class="footer__logo logo" href="#">CC</a>
-      <a class="footer__arrow" href="#top" aria-label="Back to top">  
-        <svg class="footer__arrow-el" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0" y="0" viewBox="0 0 130 65" xml:space="preserve" enable-background="new 0 0 130 65">
-          <g transform="translate(0.000000,65.000000) scale(0.100000,-0.100000)">
-            <path d="M315.4 365c-336-305-345-315-290-351 18-12 32-14 45-8 10 5 145 123 300 262l281 253 196-178c108-98 237-215 287-260 50-46 98-83 107-83s27 9 40 19c20 16 22 23 14 46 -12 33-623 585-647 585C638.4 650 489.4 522 315.4 365z"/>
-          </g>
-        </svg>
-      </a>
+    <div class="wrapper footer__inner">
+      <p class="footer__copy">© 2025 Chloe Cook</p>
+      <a class="footer__logo" href="#top">CC</a>
+      <a href="#top" aria-label="Back to top" style="font-size:13px; font-weight:700; color:var(--ink-soft);">↑ Top</a>
     </div>
   </footer>
-  <!-- END SECTION: Footer -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>

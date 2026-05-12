@@ -1,874 +1,1136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Zoo Redesign - Chloe Cook</title>
+  <title>Zoo Redesign — Chloe Cook</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Merriweather+Sans:wght@400;700;800&display=swap" rel="stylesheet">
   <style>
-    @import 'https://fonts.googleapis.com/css?family=Allura|Merriweather+Sans:400,700,800';
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Reset and Base Styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+    :root {
+      --green:      #557851;
+      --green-light:#6b9165;
+      --green-pale: #f0f5ee;
+      --ink:        #1a1a1a;
+      --ink-mid:    #585858;
+      --ink-soft:   #757575;
+      --surface:    #f9f9f6;
+      --white:      #ffffff;
+      --accent:     #6882f6;
+      --border:     rgba(0,0,0,0.08);
+      --trans:      .22s cubic-bezier(.4,0,.2,1);
+    }
+
     body {
-      background-color: #fff;
-      font-size: 14px;
-      line-height: 1.6;
       font-family: "Merriweather Sans", sans-serif;
-      color: #757575;
-      -webkit-font-smoothing: antialiased;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      background: var(--white);
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      display: inline-block;
-      color: #557851;
-      text-decoration: none;
+    a { color: var(--green); text-decoration: none; display: inline-block; }
+    img { max-width: 100%; display: block; border: 0; }
+    p { margin: 0 0 1.1em; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--ink-mid); font-weight: 700; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 68px;
+      background: rgba(255,255,255,.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
     }
 
-    ul, ol {
-      margin: 0;
-      padding: 0;
+    .nav__inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
     }
 
-    img {
-      border: 0;
-      max-width: 100%;
+    .nav__back {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700;
+      color: var(--green);
+      transition: color var(--trans);
+    }
+    .nav__back:hover { color: var(--accent); }
+    .nav__back svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+
+    .nav__logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 24px; color: var(--ink);
     }
 
-    /* Typography */
-    h1, h2, h3, h4, h5, h6 {
-      color: #222;
-      font-weight: bold;
+    /* ── HERO ── */
+    .cs-hero {
+      padding-top: 68px;
+      background: var(--surface);
+      border-bottom: 3px solid var(--green);
     }
 
-    h1 { font-size: 68px; line-height: 1.05; }
-    h2 { font-size: 42px; line-height: 1.14; }
-    h3 { font-size: 26px; line-height: 1.38; }
-    h4 { font-size: 22px; line-height: 1.38; }
-
-    p { margin: 0 0 20px 0; }
-    
-    .no-margin { margin: 0; }
-
-    /* Layout */
-    .wrapper, .wrapper--small, .wrapper--large {
-      position: relative;
-      max-width: 90%;
-      height: 100%;
-      margin: 0 auto;
+    .cs-hero__inner {
+      max-width: 1160px; margin: 0 auto; padding: 80px 40px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
     }
 
-    .wrapper--small { max-width: 980px; }
-    .wrapper--large { max-width: 1170px; }
-
-    /* Components */
-    .logo {
-      color: #585858;
-      font-size: 34px;
-      font-weight: 800;
-      text-transform: uppercase;
+    .cs-hero__eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 20px;
     }
 
-    .transform-link {
-      font-weight: 700;
-      cursor: pointer;
+    .cs-hero__eyebrow::before {
+      content: ''; display: block;
+      width: 28px; height: 2px;
+      background: var(--green); border-radius: 2px;
     }
 
-    .transform-link::after {
-      content: "";
+    .cs-hero__title {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .cs-hero__desc {
+      font-size: 17px; line-height: 1.75;
+      color: var(--ink-soft);
+      max-width: 480px;
+    }
+
+    .cs-hero__img {
+      align-self: end;
+      border-radius: 14px 14px 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0,0,0,.12);
+    }
+
+    .cs-hero__img img {
+      width: 100%; height: 320px;
+      object-fit: cover; object-position: top;
+    }
+
+    @media (max-width: 860px) {
+      .cs-hero__inner { grid-template-columns: 1fr; padding-bottom: 40px; }
+      .cs-hero__img { display: none; }
+    }
+
+    /* ── QUICK STATS ── */
+    .cs-stats {
+      background: var(--green);
+      padding: 36px 0;
+    }
+
+    .cs-stats__inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .cs-stat {
+      padding: 0 32px;
+      border-right: 1px solid rgba(255,255,255,.2);
+    }
+
+    .cs-stat:first-child { padding-left: 0; }
+    .cs-stat:last-child  { border-right: none; }
+
+    .cs-stat__value {
+      font-family: "Instrument Serif", serif;
+      font-size: 36px; font-weight: 400;
+      color: #fff; line-height: 1;
+      display: block; margin-bottom: 6px;
+    }
+
+    .cs-stat__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.7);
       display: block;
-      width: 100%;
-      height: 1px;
-      background-color: #557851;
-      transition: transform .2s ease-out;
     }
 
-    .transform-link:hover::after {
-      transform: translateY(3px) scaleY(3);
+    @media (max-width: 640px) {
+      .cs-stats__inner { grid-template-columns: repeat(2,1fr); gap: 24px; }
+      .cs-stat { border-right: none; padding: 0; }
     }
 
-    .button {
-      display: inline-block;
-      padding: 10px 30px;
-      color: #557851;
-      font-weight: 700;
-      background-color: transparent;
-      border-radius: 25px;
-      border: 2px solid #557851;
-      cursor: pointer;
-      transition: .2s all ease-in-out;
-    }
-
-    .button:hover {
-      color: #6882f6;
-      border-color: #6882f6;
-    }
-
-    /* Navigation */
-    .navigation {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 80px;
-      background-color: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      z-index: 100;
-    }
-
-    .navigation__wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 100%;
-    }
-
-    .navigation__back {
-      display: flex;
-      align-items: center;
-      color: #557851;
-      font-weight: 700;
-      transition: color .2s ease-in-out;
-    }
-
-    .navigation__back:hover {
-      color: #6882f6;
-    }
-
-    .navigation__back svg {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-      fill: currentColor;
-    }
-
-    /* Case Study Page Styles */
-    .case-study-page {
-      padding-top: 80px;
-    }
-
-    .case-study__hero {
-      text-align: center;
-      padding: 100px 0 80px 0;
-      background: linear-gradient(135deg, #f5f7f5 0%, #fff 100%);
-      border-bottom: 3px solid #557851;
-    }
-
-    .case-study__title {
-      color: #585858;
-      font-size: 58px;
-      font-weight: 800;
-      margin: 0 0 15px 0;
-    }
-
-    .case-study__subtitle {
-      color: #757575;
-      font-size: 20px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .case-study__content {
-      max-width: 1000px;
-      margin: 0 auto;
+    /* ── CONTENT ── */
+    .cs-content {
+      max-width: 1160px; margin: 0 auto;
       padding: 80px 40px;
     }
 
-    .case-study__section {
-      margin-bottom: 100px;
+    .cs-text, .cs-list, .cs-quote, .cs-hmw,
+    .cs-section > h2, .cs-section > h3,
+    .cs-section__label {
+      max-width: 100%;
     }
 
-    .case-study__section--accent {
-      background-color: #f9f9f9;
-      padding: 60px 40px;
-      border-radius: 12px;
-      margin-left: -40px;
-      margin-right: -40px;
+    @media (max-width: 640px) { .cs-content { padding: 48px 20px; } }
+
+    /* ── SECTION ── */
+    .cs-section { margin-bottom: 80px; }
+
+    .cs-section__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--green);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .case-study__section h2 {
-      color: #557851;
-      font-size: 42px;
-      font-weight: 800;
-      margin: 0 0 40px 0;
+    .cs-section__label::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
     }
 
-    .case-study__section h3 {
-      color: #585858;
-      font-size: 28px;
-      font-weight: 700;
-      margin: 40px 0 20px 0;
+    .cs-section h2 {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin-bottom: 28px;
     }
 
-    .case-study__section h4 {
-      color: #585858;
-      font-size: 16px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 0 0 8px 0;
+    .cs-section h3 {
+      font-size: 18px; font-weight: 800;
+      color: var(--ink-mid);
+      margin: 40px 0 14px;
     }
 
-    .case-study__text {
-      color: #757575;
-      font-size: 16px;
-      line-height: 1.8;
-      margin-bottom: 25px;
-    }
+    .cs-section h3:first-of-type { margin-top: 0; }
 
-    .case-study__grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
-      margin-bottom: 50px;
-    }
-
-    .case-study__detail {
-      padding: 25px;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      border-left: 4px solid #557851;
-    }
-
-    .case-study__detail p {
-      color: #585858;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .case-study__list {
-      list-style: none;
-      padding: 0;
-      margin: 25px 0;
-    }
-
-    .case-study__list li {
-      color: #757575;
-      font-size: 16px;
-      line-height: 1.8;
-      padding-left: 35px;
-      position: relative;
+    .cs-text {
+      font-size: 16px; line-height: 1.85;
+      color: var(--ink-soft);
       margin-bottom: 20px;
     }
 
-    .case-study__list li::before {
-      content: "●";
-      position: absolute;
-      left: 0;
-      top: 4px;
-      color: #557851;
-      font-weight: 800;
-      font-size: 18px;
-      line-height: 1;
+    /* ── ACCENT BLOCK ── */
+    .cs-accent {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 48px 52px;
+      margin-bottom: 80px;
     }
 
-    .case-study__image-placeholder {
-      width: 100%;
-      min-height: 400px;
-      background-color: #e8e8e8;
+    @media (max-width: 860px) { .cs-accent { padding: 36px 28px; margin-bottom: 64px; } }
+
+    /* ── OVERVIEW GRID ── */
+    .cs-overview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .cs-overview__item {
+      padding: 20px 22px;
+      background: var(--white);
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-style: italic;
-      margin: 40px 0;
-      border: 2px dashed #ccc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
     }
 
-    .case-study__image {
-      width: 100%;
-      border-radius: 12px;
-      margin: 40px 0;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    .cs-overview__item h4 {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 8px;
     }
 
-    /* Wireframe Carousel Styles */
-    .wireframe-carousel {
-      width: 100%;
-      margin: 40px 0;
+    .cs-overview__item p {
+      font-size: 14px; color: var(--ink-mid);
+      font-weight: 700; margin: 0;
+    }
+
+    @media (max-width: 640px) { .cs-overview { grid-template-columns: 1fr; } }
+
+    /* ── QUOTE CALLOUT ── */
+    .cs-quote {
+      border-left: 4px solid var(--green);
+      padding: 16px 24px;
+      margin: 28px 0;
+      background: var(--green-pale);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .cs-quote p {
+      font-size: 16px; font-style: italic;
+      color: var(--ink-mid); line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .cs-quote cite {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--green); font-style: normal;
+    }
+
+    /* ── LIST ── */
+    .cs-list {
+      list-style: none; padding: 0;
+      margin: 20px 0;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+
+    .cs-list li {
+      font-size: 15px; line-height: 1.75;
+      color: var(--ink-soft);
+      padding-left: 24px;
       position: relative;
     }
 
-    .carousel-container {
-      position: relative;
-      width: 100%;
+    .cs-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 9px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    /* ── FINDING CARDS ── */
+    .cs-findings {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .cs-finding {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--green);
+      border-radius: 0 0 12px 12px;
+      padding: 20px 22px;
+    }
+
+    .cs-finding__num {
+      font-family: "Instrument Serif", serif;
+      font-size: 32px; color: var(--green);
+      line-height: 1; margin-bottom: 8px;
+    }
+
+    .cs-finding__title {
+      font-size: 13px; font-weight: 800;
+      color: var(--ink); margin-bottom: 8px;
+    }
+
+    .cs-finding__desc {
+      font-size: 13px; color: var(--ink-soft);
+      line-height: 1.6; margin: 0;
+    }
+
+    @media (max-width: 640px) { .cs-findings { grid-template-columns: 1fr; } }
+
+    /* ── HMW ── */
+    .cs-hmw {
+      display: flex; flex-direction: column; gap: 12px;
+      margin: 24px 0;
+    }
+
+    .cs-hmw__item {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .cs-hmw__icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--green-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+    }
+
+    .cs-hmw__text {
+      font-size: 15px; font-weight: 700;
+      color: var(--ink-mid); line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── FLOW COMPARISON ── */
+    .cs-flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 28px 0;
+    }
+
+    .cs-flow__col {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
     }
 
-    .carousel-image {
-      display: none;
+    .cs-flow__head {
+      padding: 14px 20px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+
+    .cs-flow__head--before {
+      background: #fef3f2; color: #c0392b;
+    }
+
+    .cs-flow__head--after {
+      background: var(--green-pale); color: var(--green);
+    }
+
+    .cs-flow__steps {
+      padding: 16px 20px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .cs-flow__step {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--ink-soft);
+    }
+
+    .cs-flow__step-num {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .cs-flow__step-num--before { background: #fde8e7; color: #c0392b; }
+    .cs-flow__step-num--after  { background: var(--green-pale); color: var(--green); }
+
+    @media (max-width: 560px) { .cs-flow { grid-template-columns: 1fr; } }
+
+    /* ── DECISION CARDS ── */
+    .cs-decisions {
+      display: flex; flex-direction: column; gap: 16px;
+      margin: 24px 0;
+    }
+
+    .cs-decision {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 20px;
+      align-items: start;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+    }
+
+    .cs-decision__label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--green); padding-top: 2px;
+    }
+
+    .cs-decision__title {
+      font-size: 15px; font-weight: 800;
+      color: var(--ink); margin-bottom: 6px;
+    }
+
+    .cs-decision__why {
+      font-size: 14px; color: var(--ink-soft);
+      line-height: 1.65; margin: 0;
+    }
+
+    @media (max-width: 560px) { .cs-decision { grid-template-columns: 1fr; gap: 6px; } }
+
+    /* ── RESULTS ── */
+    .cs-results {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .cs-result {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 26px;
+    }
+
+    .cs-result__value {
+      font-family: "Instrument Serif", serif;
+      font-size: 42px; font-weight: 400;
+      color: var(--green); line-height: 1;
+      display: block; margin-bottom: 8px;
+    }
+
+    .cs-result__label {
+      font-size: 14px; font-weight: 700;
+      color: var(--ink); margin-bottom: 6px;
+    }
+
+    .cs-result__desc {
+      font-size: 13px; color: var(--ink-soft);
+      line-height: 1.6; margin: 0;
+    }
+
+    @media (max-width: 560px) { .cs-results { grid-template-columns: 1fr; } }
+
+    /* ── IMAGE ── */
+    .cs-img {
       width: 100%;
-      height: auto;
-    }
-
-    .carousel-image.active {
+      border-radius: 14px;
+      margin: 32px 0;
+      box-shadow: 0 8px 32px rgba(0,0,0,.10);
       display: block;
     }
 
-    .carousel-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
+    /* ── CAROUSEL ── */
+    .cs-carousel { margin: 32px 0; }
+
+    .cs-carousel__track {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.10);
+      background: var(--surface);
     }
 
-    .carousel-btn {
-      background-color: #557851;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 24px;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s;
+    .cs-carousel__slide { display: none; width: 100%; }
+    .cs-carousel__slide.active { display: block; }
+    .cs-carousel__slide img { width: 100%; height: auto; display: block; }
+
+    .cs-carousel__controls {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-top: 16px;
     }
 
-    .carousel-btn:hover {
-      background-color: #6882f6;
-    }
-
-    .carousel-dots {
-      display: flex;
-      gap: 10px;
-    }
-
-    .dot {
-      height: 12px;
-      width: 12px;
-      background-color: #ccc;
+    .cs-carousel__btn {
+      width: 36px; height: 36px;
       border-radius: 50%;
-      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      font-size: 18px; line-height: 1;
       cursor: pointer;
-      transition: background-color 0.3s;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--trans);
     }
 
-    .dot.active,
-    .dot:hover {
-      background-color: #557851;
+    .cs-carousel__btn:hover { background: var(--ink); }
+
+    .cs-carousel__dots { display: flex; gap: 8px; }
+
+    .cs-carousel__dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none; cursor: pointer;
+      transition: background var(--trans), transform var(--trans);
+      padding: 0;
     }
 
-    .case-study__back-to-top {
+    .cs-carousel__dot.active,
+    .cs-carousel__dot:hover {
+      background: var(--green);
+      transform: scale(1.3);
+    }
+
+    .cs-carousel__caption {
       text-align: center;
-      padding: 60px 0 80px 0;
+      font-size: 12px; color: var(--ink-soft);
+      margin-top: 10px;
     }
 
-    /* Footer */
+    /* ── REFLECTION ── */
+    .cs-reflection {
+      background: var(--ink);
+      border-radius: 16px;
+      padding: 40px 44px;
+      margin: 0 0 80px;
+    }
+
+    .cs-reflection h3 {
+      font-family: "Instrument Serif", serif;
+      font-size: 22px; font-weight: 400;
+      color: #fff; margin-bottom: 16px;
+    }
+
+    .cs-reflection p {
+      font-size: 15px; color: rgba(255,255,255,.7);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 640px) { .cs-reflection { padding: 28px 24px; } }
+
+    /* ── NEXT STEPS ── */
+    .cs-nextsteps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin: 24px 0;
+    }
+
+    .cs-nextstep {
+      padding: 20px 22px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .cs-nextstep__num {
+      font-family: "Instrument Serif", serif;
+      font-size: 28px; color: var(--green);
+      margin-bottom: 10px; line-height: 1;
+    }
+
+    .cs-nextstep__title {
+      font-size: 13px; font-weight: 800;
+      color: var(--ink); margin-bottom: 6px;
+    }
+
+    .cs-nextstep__desc {
+      font-size: 13px; color: var(--ink-soft);
+      line-height: 1.6; margin: 0;
+    }
+
+    @media (max-width: 560px) { .cs-nextsteps { grid-template-columns: 1fr; } }
+
+    /* ── FOOTER ── */
+    .cs-footer {
+      text-align: center; padding: 60px 40px 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-footer__btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-size: 14px; font-weight: 700;
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+      transition: all var(--trans);
+    }
+
+    .cs-footer__btn:hover {
+      background: var(--green);
+      color: #fff;
+    }
+
     .footer {
-      position: relative;
-      width: 100%;
-      padding: 40px 0;
-      background-color: #f5f7f5;
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
     }
 
-    .footer__wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .footer__inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
     }
 
-    .footer__copyright {
-      color: #757575;
-    }
+    .footer__copy { font-size: 13px; color: var(--ink-soft); }
 
-    /* Responsive Design */
-    @media (max-width: 991px) {
-      .case-study__title {
-        font-size: 42px;
-      }
-
-      .case-study__grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .case-study__content {
-        padding: 60px 30px;
-      }
-
-      .case-study__section h2 {
-        font-size: 36px;
-      }
-
-      .case-study__section h3 {
-        font-size: 24px;
-      }
-
-      .case-study__section--accent {
-        padding: 40px 30px;
-        margin-left: -30px;
-        margin-right: -30px;
-      }
-    }
-
-    @media (max-width: 767px) {
-      .case-study__title {
-        font-size: 32px;
-      }
-
-      .case-study__hero {
-        padding: 60px 0 50px 0;
-      }
-
-      .case-study__content {
-        padding: 40px 20px;
-      }
-
-      .case-study__section h2 {
-        font-size: 28px;
-      }
-
-      .case-study__section h3 {
-        font-size: 22px;
-      }
-
-      .case-study__section--accent {
-        padding: 30px 20px;
-        margin-left: -20px;
-        margin-right: -20px;
-      }
-
-      .case-study__image-placeholder {
-        min-height: 250px;
-      }
-
-      .navigation__back span {
-        display: none;
-      }
-
-      .logo {
-        font-size: 24px;
-      }
+    .footer__logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 22px; color: var(--ink);
     }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <div class="navigation">
-    <div class="navigation__wrapper wrapper--large">
-      <a class="navigation__back" href="index.html">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav__inner">
+      <a class="nav__back" href="index.html">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
         </svg>
-        <span>Back to Portfolio</span>
+        Back to Portfolio
       </a>
-      <a class="logo" href="index.html">CC</a>
+      <a class="nav__logo" href="index.html">CC</a>
     </div>
-  </div>
+  </nav>
 
-  <!-- Case Study Content -->
-  <div class="case-study-page">
-    <!-- Hero Section -->
-    <div class="case-study__hero">
-      <h1 class="case-study__title">Cheyenne Mountain Zoo<br>Website Redesign</h1>
-      <p class="case-study__subtitle">UX Case Study</p>
-    </div>
-
-    <div class="case-study__content">
-      <!-- Project Overview -->
-      <section class="case-study__section">
-        <h2>Project Overview</h2>
-        
-        <div class="project-info-box">
-          <h4>ROLE</h4>
-          <p>I served as the UX designer for this project in my UX 1 design class. I was responsible for conducting user research, creating wireframes and prototypes, and developing design solutions to improve the zoo's website experience.</p>
-        </div>
-        
-        <div class="project-info-box">
-          <h4>TOOLS</h4>
-          <p>Figma</p>
-        </div>
-        
-        <p class="case-study__text" style="margin-top: 40px;">This project centered on redesigning the Cheyenne Mountain Zoo website to enhance user experience and simplify the ticket purchasing process. The redesign aimed to make essential visitor information more accessible and intuitive for guests planning their zoo visit.</p>
-        <a href="zoo-case-study.html" class="navigation__back">Figma Final Prototype</a>
-      </section>
-
-      <!-- The Challenge -->
-      <section class="case-study__section">
-        <h2>The Challenge</h2>
-        <h3>Problem Statement</h3>
-        <p class="case-study__text">The current Cheyenne Mountain Zoo website presents navigation challenges for visitors trying to plan their trip and purchase tickets. Users struggle to find key information about exhibits, operating hours, and special events, leading to frustration and abandoned booking attempts.</p>
-        <h3>Goals</h3>
-        <ul class="case-study__list">
-          <li>Simplify the ticket purchasing process and reduce checkout abandonment</li>
-          <li>Create better information architecture to showcase zoo attractions and animals</li>
-          <li>Enhance accessibility for all users</li>
-        </ul>
-      </section>
-
-      <!-- Research Phase -->
-      <section class="case-study__section case-study__section--accent">
-        <h2>Research Phase</h2>
-        
-        <h3>Usability Testing</h3>
-        <p class="case-study__text">I conducted usability testing on the current Cheyenne Mountain Zoo website with 5 participants to identify pain points and areas for improvement.</p>
-        <ul class="case-study__list">
-          <li><strong>Navigation Confusion:</strong> Users had difficulty locating where to purchase a ticket and why it took so many clicks.</li>
-          <li><strong>Ticket Purchase Friction:</strong> The checkout process had too many steps and unclear pricing options</li>
-          <li><strong>Information Overload:</strong> Too much text on pages made it difficult to scan for key details</li>
-        </ul>
-
-        <h3>Affinity Mapping</h3>
-        <p class="case-study__text">After gathering user feedback, I organized insights into themes using affinity mapping. Key themes that emerged included navigation issues, booking complexity, and need for visual hierarchy.</p>
-        <img src="assets/img/affinity-mapping.JPG" alt="Affinity mapping with colorful sticky notes organized into groups" class="case-study__image">
-        
-        <h3>How Might We Questions</h3>
-        <p class="case-study__text">From the affinity mapping exercise, I developed three key "How Might We" questions to guide the design process:</p>
-        <ul class="case-study__list">
-          <li>How might we improve the looks of Cheyenne Mountain Zoo?</li>
-          <li>How might we make the Cheyenne Mountain Zoo website less confusing to navigate?</li>
-          <li>How might we make important information for Cheyenne Mountain Zoo more relevant and stand out?</li>
-        </ul>
-      </section>
-
-      <!-- Define -->
-      <section class="case-study__section">
-        <h2>Define</h2>
-        <h3>Refined Problem Statement</h3>
-        <p class="case-study__text">Zoo visitors need a clear, intuitive way to plan their visit and purchase tickets because the current website's complex navigation and checkout process creates frustration and prevents them from easily purchasing tickets.</p>
-        
-        <h3>Proposed Task Flow</h3>
-        <p class="case-study__text">I mapped out an optimized user flow for the ticket purchasing journey. The task was to create a better experience for a user purchasing 2 adult tickets for Thursday, December 11 at 11:00 am, starting from the homepage and ending with a confirmation screen.</p>
-        <p class="case-study__text">My proposed flow reduces steps from the original 7-step process to 4 streamlined steps, while maintaining key requirements:</p>
-        <ul class="case-study__list">
-          <li>Tickets must be purchased for a specific day and time</li>
-          <li>Tickets must be purchased for a specific age range (adult)</li>
-          <li>Flow starts on the homepage and ends with email confirmation</li>
-        </ul>
-        <img src="assets/img/task-flow.png" alt="Task flow diagram showing the streamlined ticket purchasing process" class="case-study__image">
-      </section>
-
-      <!-- Design -->
-      <section class="case-study__section case-study__section--accent">
-        <h2>Ideation & Design</h2>
-        
-        <h3>Low Fidelity Wireframes</h3>
-        <p class="case-study__text">I started with paper sketches to quickly explore different layout options and information hierarchies. The focus was on simplifying navigation and making the ticket purchase path more obvious.</p>
-        <p class="case-study__text">Key screens included:</p>
-        <ul class="case-study__list">
-          <li><strong>Homepage redesign:</strong> Simplified layout with prominent "BUY Tickets" call-to-action and clear navigation</li>
-          <li><strong>Ticket selection screen:</strong> Consolidated all ticket information (date, time, quantity, pricing) into a single, easy-to-scan view with personal information fields on the same page</li>
-        </ul>
-        <img src="assets/img/lowfi-wireframes.jpg" alt="Low-fidelity wireframe sketches showing homepage and ticket selection screens" class="case-study__image">
-
-        <h3>Mid Fidelity Wireframes</h3>
-        <p class="case-study__text">Moving to digital wireframes, I refined the information architecture and added more detail to key screens. These wireframes show the complete ticket purchasing flow from homepage to confirmation.</p>
-        
-        <div class="wireframe-carousel">
-          <div class="carousel-container">
-            <img src="assets/img/midfi-homepage.png" alt="Mid-fidelity wireframe - Homepage with Buy Tickets button" class="carousel-image active">
-            <img src="assets/img/midfi-ticket-selection.png" alt="Mid-fidelity wireframe - Ticket selection with quantity and pricing" class="carousel-image">
-            <img src="assets/img/midfi-date-time.png" alt="Mid-fidelity wireframe - Date and time selection screen" class="carousel-image">
-            <img src="assets/img/midfi-confirmation.png" alt="Mid-fidelity wireframe - Confirmation screen with ticket details" class="carousel-image">
-          </div>
-          <div class="carousel-controls">
-            <button class="carousel-btn prev" onclick="changeSlide(-1)" aria-label="Previous image">‹</button>
-            <div class="carousel-dots">
-              <span class="dot active" onclick="currentSlide(1)"></span>
-              <span class="dot" onclick="currentSlide(2)"></span>
-              <span class="dot" onclick="currentSlide(3)"></span>
-              <span class="dot" onclick="currentSlide(4)"></span>
-            </div>
-            <button class="carousel-btn next" onclick="changeSlide(1)" aria-label="Next image">›</button>
-          </div>
-        </div>
-
-        <h3>Brand Foundational Elements</h3>
-        <p class="case-study__text">I developed a fresh visual identity that maintains connection to the zoo's natural setting while feeling modern and accessible:</p>
-        <ul class="case-study__list">
-          <li><strong>Typography:</strong> Montserrat font family for headers and body text, ensuring readability and accessibility with minimum 16px body text</li>
-          <li><strong>Icons:</strong> Consistent 24x24px icon set for navigation and interactive elements</li>
-          <li><strong>Color Palette:</strong> Earthy olive greens paired with persian orange accents, viridian success green, and YinMn blue for informational elements</li>
-        </ul>
-        
-        <div class="wireframe-carousel">
-          <div class="carousel-container">
-            <!-- <img src="assets/img/brand-typography.png" alt="Brand foundational elements - Typography guidelines" class="carousel-image active"> -->
-            <img src="assets/img/brand-icons.png" alt="Brand foundational elements - Icon set" class="carousel-image">
-            <img src="assets/img/brand-colors.png" alt="Brand foundational elements - Color palette" class="carousel-image">
-          </div>
-          <div class="carousel-controls">
-            <button class="carousel-btn prev" onclick="changeBrandSlide(-1)" aria-label="Previous image">‹</button>
-            <div class="carousel-dots" id="brand-dots">
-              <span class="dot active" onclick="currentBrandSlide(1)"></span>
-              <span class="dot" onclick="currentBrandSlide(2)"></span>
-              <!-- <span class="dot" onclick="currentBrandSlide(3)"></span> -->
-            </div>
-            <button class="carousel-btn next" onclick="changeBrandSlide(1)" aria-label="Next image">›</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Prototyping -->
-      <section class="case-study__section">
-        <h2>Prototyping & Testing</h2>
-        
-        <h3>High Fidelity Interactive Prototype V1</h3>
-        <p class="case-study__text">I created a fully interactive prototype with the new visual design applied. Key improvements included:</p>
-        <ul class="case-study__list">
-          <li><strong>Homepage redesign:</strong> Cleaner hero section with prominent "Buy Tickets" button and engaging animal imagery</li>
-          <li><strong>Simplified ticket flow:</strong> Streamlined from 7 steps to 4 steps - ticket type selection, date/time selection, personal information, and confirmation</li>
-          <li><strong>Clear pricing display:</strong> Ticket pricing and fees shown upfront with running total throughout the process</li>
-          <li><strong>Improved information hierarchy:</strong> Important details like date, time, and pricing displayed prominently with consistent styling</li>
-        </ul>
-        
-        <div class="wireframe-carousel">
-          <div class="carousel-container">
-            <img src="assets/img/highfi-v1-homepage.png" alt="High-fidelity prototype V1 - Homepage with animals" class="carousel-image active">
-            <img src="assets/img/highfi-v1-ticket-type.png" alt="High-fidelity prototype V1 - Ticket type selection" class="carousel-image">
-            <img src="assets/img/highfi-v1-datetime.png" alt="High-fidelity prototype V1 - Date and time selection" class="carousel-image">
-            <img src="assets/img/highfi-v1-personal-info.png" alt="High-fidelity prototype V1 - Personal information form" class="carousel-image">
-            <img src="assets/img/highfi-v1-confirmation.png" alt="High-fidelity prototype V1 - Confirmation screen" class="carousel-image">
-          </div>
-          <div class="carousel-controls">
-            <button class="carousel-btn prev" onclick="changeHighfiV1Slide(-1)" aria-label="Previous image">‹</button>
-            <div class="carousel-dots">
-              <span class="dot active" onclick="currentHighfiV1Slide(1)"></span>
-              <span class="dot" onclick="currentHighfiV1Slide(2)"></span>
-              <span class="dot" onclick="currentHighfiV1Slide(3)"></span>
-              <span class="dot" onclick="currentHighfiV1Slide(4)"></span>
-              <span class="dot" onclick="currentHighfiV1Slide(5)"></span>
-            </div>
-            <button class="carousel-btn next" onclick="changeHighfiV1Slide(1)" aria-label="Next image">›</button>
-          </div>
-        </div>
-
-        <h3>User Testing Results</h3>
-        <p class="case-study__text">I conducted usability testing with 3 new participants using the V1 prototype. Key insights:</p>
-        <ul class="case-study__list">
-          <li><strong>Success:</strong> All users completed the ticket purchase flow without assistance</li>
-          <li><strong>Improvement Needed:</strong> Users wanted more prominent display of operating hours</li>
-          <li><strong>Positive Feedback:</strong> Users loved the animal pictures and visual design</li>
-        </ul>
-      </section>
-
-      <!-- Final Design -->
-      <section class="case-study__section case-study__section--accent">
-        <h2>Final Design</h2>
-        <h3>High Fidelity Interactive Prototype V2</h3>
-        <p class="case-study__text">Based on user testing feedback, I made the following improvements:</p>
-        <ul class="case-study__list">
-          <li><strong>Simplified personal information form:</strong> Used a single column layout so that the ticket information could scroll along the screen woth the user.</li>
-          <li><strong>Added payment screen:</strong> Introduced a dedicated payment page within the information sectionm keeping checkout process organized and reducing cognitive load</li>
-          <li><strong>Enhanced confirmation design:</strong> Moved ticket summary to the top with clear visual hierarchy, removed unnecessary navigation tabs, and added footer with zoo contact information and newsletter signup</li>
-          <li><strong>Improved visual consistency:</strong> Standardized button styles and spacing throughout the entire flow for a more polished, professional appearance, including adding a secodnary button.</li>
-          <li><strong>Better error prevention:</strong> Added checkboxes with clear labels for optional features like "Text me with receipts" and important disclaimers before checkout</li>
-        </ul>
-        
-        <div class="wireframe-carousel">
-          <div class="carousel-container">
-            <img src="assets/img/highfi-v2-homepage.png" alt="High-fidelity prototype V2 - Homepage with improved imagery" class="carousel-image active">
-            <img src="assets/img/highfi-v2-ticket-type.png" alt="High-fidelity prototype V2 - Ticket type selection" class="carousel-image">
-            <img src="assets/img/highfi-v2-datetime.png" alt="High-fidelity prototype V2 - Date and time selection" class="carousel-image">
-            <img src="assets/img/highfi-v2-personal-info.png" alt="High-fidelity prototype V2 - Simplified personal information" class="carousel-image">
-            <img src="assets/img/highfi-v2-payment.png" alt="High-fidelity prototype V2 - New payment screen" class="carousel-image">
-            <img src="assets/img/highfi-v2-confirmation.jpg" alt="High-fidelity prototype V2 - Enhanced confirmation with footer" class="carousel-image">
-          </div>
-          <div class="carousel-controls">
-            <button class="carousel-btn prev" onclick="changeHighfiV2Slide(-1)" aria-label="Previous image">‹</button>
-            <div class="carousel-dots">
-              <span class="dot active" onclick="currentHighfiV2Slide(1)"></span>
-              <span class="dot" onclick="currentHighfiV2Slide(2)"></span>
-              <span class="dot" onclick="currentHighfiV2Slide(3)"></span>
-              <span class="dot" onclick="currentHighfiV2Slide(4)"></span>
-              <span class="dot" onclick="currentHighfiV2Slide(5)"></span>
-              <span class="dot" onclick="currentHighfiV2Slide(6)"></span>
-            </div>
-            <button class="carousel-btn next" onclick="changeHighfiV2Slide(1)" aria-label="Next image">›</button>
-          </div>
-        </div>
-      </section>
-
-     <!-- Results -->
-      <section class="case-study__section">
-        <h2>Results & Impact</h2>
-        <h3>Design Improvements</h3>
-        <ul class="case-study__list">
-          <li><strong>Streamlined Checkout Flow:</strong> Reduced from 7 steps to 4 steps, eliminating unnecessary navigation and form pages</li>
-          <li><strong>Fewer Clicks to Purchase:</strong> Users can now complete ticket purchase in 4 clicks from homepage instead of the original 8+ clicks</li>
-          <li><strong>Improved Task Completion:</strong> All 5 usability test participants successfully completed the ticket purchase without assistance in the final design</li>
-          <li><strong>Enhanced Visual Hierarchy:</strong> Clear pricing display and prominent CTAs made key information immediately scannable</li>
-        </ul>
-      </section>
-
-      <!-- Takeaways -->
-      <section class="case-study__section">
-        <h2>Key Takeaways & Learnings</h2>
-        <h3>What I Learned</h3>
-        <ul class="case-study__list">
-          <li>The importance of testing early and often - user feedback in the wireframe stage saved significant rework time</li>
-          <li>Small changes like prominent operating hours can have big impacts on user confidence and satisfaction</li>
-          <li>Iterative design based on real user feedback leads to better outcomes than trying to get everything perfect the first time</li>
-        </ul>
-
-        <h3>How I Would Improve This Design Further</h3>
-        <ul class="case-study__list">
-          <li><strong>Add real-time availability indicators:</strong> Show ticket availability for different time slots to help users make informed decisions</li>
-          <li><strong>Implement progress indicators:</strong> Add a visual progress bar showing users where they are in the checkout process</li>
-          <li><strong>Mobile-first refinements:</strong> Further optimize the mobile experience with larger touch targets and simplified forms</li>
-        </ul>
-
-        <h3>Skills Developed</h3>
-        <ul class="case-study__list">
-          <li>User research and usability testing methodologies</li>
-          <li>Information architecture and navigation design</li>
-          <li>E-commerce checkout flow optimization</li>
-          <li>Iterative design based on user feedback</li>
-        </ul>
-      </section>
-
-      <section class="case-study__section">
-        <h2>Next Steps</h2>
-        <p class="case-study__text">With more time and resources, I would conduct A/B testing on the new design with real zoo visitors, implement analytics to track conversion rates, and continue iterating based on actual usage data. I'd also explore adding personalization features like saving favorite animals or creating custom visit itineraries.</p>
-      </section>
-
-      <!-- Back to Top -->
-      <div class="case-study__back-to-top">
-        <a class="button" href="index.html">Back to Portfolio</a>
+  <!-- HERO -->
+  <div class="cs-hero">
+    <div class="cs-hero__inner">
+      <div>
+        <p class="cs-hero__eyebrow">UX Case Study</p>
+        <h1 class="cs-hero__title">Cheyenne Mountain Zoo Website Redesign</h1>
+        <p class="cs-hero__desc">Redesigning a zoo website to remove barriers between visitors and their tickets — cutting a 7-step checkout to 4 steps and achieving 100% task completion in testing.</p>
+      </div>
+      <div class="cs-hero__img">
+        <img src="assets/img/highfi-v2-homepage.png" alt="Final high-fidelity homepage design">
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- STATS BAR -->
+  <div class="cs-stats">
+    <div class="cs-stats__inner">
+      <div class="cs-stat">
+        <span class="cs-stat__value">7→4</span>
+        <span class="cs-stat__label">Checkout steps</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat__value">2/5</span>
+        <span class="cs-stat__label">Abandoned original site</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat__value">100%</span>
+        <span class="cs-stat__label">Task completion rate</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat__value">Figma</span>
+        <span class="cs-stat__label">Tool</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-content">
+
+    <!-- ── 01 OVERVIEW ── -->
+    <section class="cs-section">
+      <p class="cs-section__label">01 — Overview</p>
+      <h2>At a glance</h2>
+
+      <div class="cs-overview">
+        <div class="cs-overview__item">
+          <h4>My Role</h4>
+          <p>Sole UX Designer — research, wireframes, prototyping, testing</p>
+        </div>
+        <div class="cs-overview__item">
+          <h4>Timeline</h4>
+          <p>8 weeks</p>
+        </div>
+        <div class="cs-overview__item">
+          <h4>Methods</h4>
+          <p>Usability testing, affinity mapping, task flow analysis</p>
+        </div>
+      </div>
+
+      <p class="cs-text">The Cheyenne Mountain Zoo's website had a problem that was quietly costing them visitors: buying a ticket was genuinely confusing. I took on this redesign to understand exactly where people were getting stuck — and to design a solution grounded in what real users actually struggled with, not assumptions.</p>
+
+      <a href="#" class="nav__back" style="margin-top: 8px;">View Figma Prototype →</a>
+    </section>
+
+    <!-- ── 02 PROBLEM ── -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">02 — The Problem</p>
+      <h2>Visitors were giving up before buying tickets</h2>
+
+      <p class="cs-text">The existing website buried critical information — ticket prices, operating hours, available time slots — across multiple pages. Users who wanted to plan a simple family visit had to navigate a confusing information architecture just to answer basic questions like "how much does it cost?" and "how do I actually buy a ticket?"</p>
+
+      <div class="cs-quote">
+        <p>"I just wanted to know the price. I clicked around for two minutes and never found it. I'd probably just call them."</p>
+        <cite>— Participant 3, usability test</cite>
+      </div>
+
+      <p class="cs-text">The core tension: the zoo had a lot to communicate — animals, events, conservation programs, memberships — but that richness was creating noise that buried the one thing most visitors came to the site to do.</p>
+
+      <h3>Design Goals</h3>
+      <ul class="cs-list">
+        <li>Make ticket purchasing the clearest, shortest path on the site</li>
+        <li>Surface key visitor information (hours, pricing, what's included) without requiring navigation</li>
+        <li>Reduce the number of decisions a user has to make before reaching checkout</li>
+        <li>Create a design system that feels welcoming and on-brand with the zoo's natural setting</li>
+      </ul>
+    </section>
+
+    <!-- ── 03 RESEARCH ── -->
+    <section class="cs-section">
+      <p class="cs-section__label">03 — Research</p>
+      <h2>Finding out where people actually got stuck</h2>
+
+      <h3>Usability Testing on the Existing Site</h3>
+      <p class="cs-text">I recruited 5 participants and gave them a single task: purchase 2 adult tickets for a specific date and time. I observed without intervening, noting where they hesitated, what they clicked, and where they expressed frustration out loud.</p>
+
+      <p class="cs-text">The results were more extreme than I expected. None of the 5 participants completed the task without significant friction. Two gave up entirely before reaching checkout.</p>
+
+      <div class="cs-findings">
+        <div class="cs-finding">
+          <div class="cs-finding__num">5/5</div>
+          <div class="cs-finding__title">Couldn't find tickets quickly</div>
+          <p class="cs-finding__desc">All participants took multiple wrong turns before locating the ticket purchase path.</p>
+        </div>
+        <div class="cs-finding">
+          <div class="cs-finding__num">3/5</div>
+          <div class="cs-finding__title">Confused by pricing</div>
+          <p class="cs-finding__desc">Participants couldn't find adult ticket pricing before committing to checkout.</p>
+        </div>
+        <div class="cs-finding">
+          <div class="cs-finding__num">2/5</div>
+          <div class="cs-finding__title">Abandoned before finishing</div>
+          <p class="cs-finding__desc">Two participants gave up and said they'd "just call" or "look somewhere else."</p>
+        </div>
+      </div>
+
+      <h3>Affinity Mapping</h3>
+      <p class="cs-text">After testing, I transcribed observations and quotes onto sticky notes and grouped them by theme. Three clear clusters emerged: navigation confusion, checkout friction, and information overload. The navigation cluster was by far the largest — nearly every participant comment traced back to not being able to find what they needed.</p>
+
+      <img src="assets/img/affinity-mapping.JPG" alt="Affinity mapping exercise — sticky notes grouped into navigation, checkout, and information themes" class="cs-img">
+
+      <h3>Key Insight</h3>
+      <div class="cs-quote">
+        <p>I assumed the checkout form would be the biggest problem. Testing showed the real drop-off happened much earlier — users were failing to find the "Buy Tickets" button at all. That shifted my entire design focus toward the homepage and navigation before I touched the checkout flow.</p>
+        <cite>— Design reflection</cite>
+      </div>
+
+      <h3>"How Might We" Questions</h3>
+      <p class="cs-text">From the affinity mapping clusters I distilled three design questions to focus the ideation phase:</p>
+
+      <div class="cs-hmw">
+        <div class="cs-hmw__item">
+          <div class="cs-hmw__icon">🗺️</div>
+          <p class="cs-hmw__text">How might we help first-time visitors find ticket pricing and availability without leaving the homepage?</p>
+        </div>
+        <div class="cs-hmw__item">
+          <div class="cs-hmw__icon">✂️</div>
+          <p class="cs-hmw__text">How might we reduce the number of decisions a user has to make before they reach checkout?</p>
+        </div>
+        <div class="cs-hmw__item">
+          <div class="cs-hmw__icon">👁️</div>
+          <p class="cs-hmw__text">How might we make critical information — hours, prices, what's included — immediately scannable without overwhelming the page?</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 04 DEFINE ── -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">04 — Define</p>
+      <h2>Focusing on the right user at the right moment</h2>
+
+      <h3>Refined Problem Statement</h3>
+      <p class="cs-text">Visitors planning a zoo trip need a fast, clear path from the homepage to a confirmed ticket — because the current site's information architecture and multi-step checkout process creates enough friction that users abandon the purchase entirely, costing the zoo conversions and visitors a frustrating experience.</p>
+
+      <h3>Proposed Task Flow</h3>
+      <p class="cs-text">I mapped the original 7-step flow against my proposed redesign. The key change wasn't just cutting steps — it was eliminating the decisions that caused hesitation. The original flow required users to navigate to a separate ticketing page, choose a ticket type with unclear labels, then re-enter date and time on a different screen. My redesign consolidates ticket type, date, and quantity onto a single screen.</p>
+
+      <div class="cs-flow">
+        <div class="cs-flow__col">
+          <div class="cs-flow__head cs-flow__head--before">Original — 7 steps</div>
+          <div class="cs-flow__steps">
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">1</span>Homepage</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">2</span>Navigate to "Visit"</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">3</span>Find ticket link</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">4</span>Select ticket type</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">5</span>Select date &amp; time</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">6</span>Personal info + payment</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--before">7</span>Confirmation</div>
+          </div>
+        </div>
+        <div class="cs-flow__col">
+          <div class="cs-flow__head cs-flow__head--after">Redesign — 4 steps</div>
+          <div class="cs-flow__steps">
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--after">1</span>Homepage (prominent CTA)</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--after">2</span>Ticket type + date + qty</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--after">3</span>Personal info + payment</div>
+            <div class="cs-flow__step"><span class="cs-flow__step-num cs-flow__step-num--after">4</span>Confirmation</div>
+          </div>
+        </div>
+      </div>
+
+      <img src="assets/img/task-flow.png" alt="Task flow diagram showing original vs redesigned ticket purchase path" class="cs-img">
+    </section>
+
+    <!-- ── 05 DESIGN ── -->
+    <section class="cs-section">
+      <p class="cs-section__label">05 — Design</p>
+      <h2>From sketches to a visual system</h2>
+
+      <h3>Low Fidelity Wireframes</h3>
+      <p class="cs-text">I started with paper sketches to test layout concepts quickly before committing to anything digital. The goal at this stage was purely structural — where does the "Buy Tickets" button live, how much information is on the homepage, and how does the ticket selection page consolidate what was previously three separate screens.</p>
+
+      <img src="assets/img/lowfi-wireframes.jpg" alt="Paper wireframe sketches of homepage and ticket selection screens" class="cs-img">
+
+      <h3>Mid Fidelity Wireframes</h3>
+      <p class="cs-text">Moving to Figma, I fleshed out the full purchase flow across four screens. At this stage I was focused on information hierarchy — what's the first thing a user's eye lands on, and does that match what they need most?</p>
+
+      <div class="cs-carousel" data-carousel="midfi">
+        <div class="cs-carousel__track">
+          <div class="cs-carousel__slide active"><img src="assets/img/midfi-homepage.png" alt="Mid-fi: Homepage with prominent Buy Tickets CTA"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/midfi-ticket-selection.png" alt="Mid-fi: Consolidated ticket selection screen"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/midfi-date-time.png" alt="Mid-fi: Date and time selection"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/midfi-confirmation.png" alt="Mid-fi: Confirmation screen"></div>
+        </div>
+        <div class="cs-carousel__controls">
+          <button class="cs-carousel__btn" data-dir="-1" aria-label="Previous">‹</button>
+          <div class="cs-carousel__dots">
+            <button class="cs-carousel__dot active" data-idx="0"></button>
+            <button class="cs-carousel__dot" data-idx="1"></button>
+            <button class="cs-carousel__dot" data-idx="2"></button>
+            <button class="cs-carousel__dot" data-idx="3"></button>
+          </div>
+          <button class="cs-carousel__btn" data-dir="1" aria-label="Next">›</button>
+        </div>
+        <p class="cs-carousel__caption">Mid-fidelity wireframes — 4 screens</p>
+      </div>
+
+      <h3>Visual Design System</h3>
+      <p class="cs-text">I built a lightweight design system before moving to high fidelity, establishing the visual language that would run through all screens consistently:</p>
+
+      <ul class="cs-list">
+        <li><strong>Typography:</strong> Montserrat for all text — chosen for legibility at small sizes and a clean, modern feel that complements the zoo's natural aesthetic without feeling corporate.</li>
+        <li><strong>Color palette:</strong> Earthy olive greens as the primary brand color, with persian orange for accent CTAs, viridian green for success states, and YinMn blue for informational elements. The palette was tested for WCAG AA contrast compliance.</li>
+        <li><strong>Icons:</strong> Consistent 24×24px outline icon set for navigation, interactive elements, and wayfinding throughout the purchase flow.</li>
+      </ul>
+
+      <div class="cs-carousel" data-carousel="brand">
+        <div class="cs-carousel__track">
+          <div class="cs-carousel__slide active"><img src="assets/img/brand-icons.png" alt="Icon set for navigation and interactive elements"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/brand-colors.png" alt="Color palette — olive greens, persian orange, viridian, YinMn blue"></div>
+        </div>
+        <div class="cs-carousel__controls">
+          <button class="cs-carousel__btn" data-dir="-1" aria-label="Previous">‹</button>
+          <div class="cs-carousel__dots">
+            <button class="cs-carousel__dot active" data-idx="0"></button>
+            <button class="cs-carousel__dot" data-idx="1"></button>
+          </div>
+          <button class="cs-carousel__btn" data-dir="1" aria-label="Next">›</button>
+        </div>
+        <p class="cs-carousel__caption">Brand design system — icons and color palette</p>
+      </div>
+    </section>
+
+    <!-- ── 06 PROTOTYPE ── -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">06 — Prototype & Test</p>
+      <h2>Building V1, then testing what broke</h2>
+
+      <h3>High Fidelity Prototype — V1</h3>
+      <p class="cs-text">With the design system in place I built a fully interactive Figma prototype. The four key improvements over the original site:</p>
+
+      <div class="cs-decisions">
+        <div class="cs-decision">
+          <span class="cs-decision__label">Homepage</span>
+          <div>
+            <p class="cs-decision__title">Prominent "Buy Tickets" CTA above the fold</p>
+            <p class="cs-decision__why">Testing showed users couldn't find the ticket path at all. I moved the CTA to the hero section, full width, impossible to miss — because a button users can't find doesn't exist.</p>
+          </div>
+        </div>
+        <div class="cs-decision">
+          <span class="cs-decision__label">Flow</span>
+          <div>
+            <p class="cs-decision__title">Consolidated ticket type + date + time onto one screen</p>
+            <p class="cs-decision__why">The original spread these decisions across three separate pages. Combining them reduces navigation overhead and lets users see the running total update as they make choices.</p>
+          </div>
+        </div>
+        <div class="cs-decision">
+          <span class="cs-decision__label">Pricing</span>
+          <div>
+            <p class="cs-decision__title">Pricing visible before checkout commitment</p>
+            <p class="cs-decision__why">Three of five test participants said they couldn't find pricing on the existing site. I surfaced adult/child/senior pricing directly on the ticket selection screen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-carousel" data-carousel="v1">
+        <div class="cs-carousel__track">
+          <div class="cs-carousel__slide active"><img src="assets/img/highfi-v1-homepage.png" alt="V1: Homepage with hero CTA"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v1-ticket-type.png" alt="V1: Ticket type selection"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v1-datetime.png" alt="V1: Date and time selection"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v1-personal-info.png" alt="V1: Personal information form"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v1-confirmation.png" alt="V1: Confirmation screen"></div>
+        </div>
+        <div class="cs-carousel__controls">
+          <button class="cs-carousel__btn" data-dir="-1" aria-label="Previous">‹</button>
+          <div class="cs-carousel__dots">
+            <button class="cs-carousel__dot active" data-idx="0"></button>
+            <button class="cs-carousel__dot" data-idx="1"></button>
+            <button class="cs-carousel__dot" data-idx="2"></button>
+            <button class="cs-carousel__dot" data-idx="3"></button>
+            <button class="cs-carousel__dot" data-idx="4"></button>
+          </div>
+          <button class="cs-carousel__btn" data-dir="1" aria-label="Next">›</button>
+        </div>
+        <p class="cs-carousel__caption">High fidelity V1 — 5 screens</p>
+      </div>
+
+      <h3>V1 Usability Testing — What I Found</h3>
+      <p class="cs-text">I tested V1 with 3 new participants using the same scenario as the original test. All three completed the purchase — a dramatic improvement. But two patterns emerged that needed fixing:</p>
+
+      <ul class="cs-list">
+        <li><strong>Operating hours were invisible.</strong> Two participants paused before buying tickets specifically to check the hours. They couldn't find them and expressed uncertainty. This was a confidence issue — users want to confirm the zoo will be open before committing to a purchase.</li>
+        <li><strong>The personal info form felt long.</strong> The two-column layout on desktop caused one participant to miss fields in the right column, assuming the form ended at the bottom of the left column.</li>
+      </ul>
+
+      <div class="cs-quote">
+        <p>"Wait, is it even open on Thursdays? I feel like I should check that first... I can't find it anywhere on this page."</p>
+        <cite>— Participant 2, V1 testing</cite>
+      </div>
+    </section>
+
+    <!-- ── 07 FINAL ── -->
+    <section class="cs-section">
+      <p class="cs-section__label">07 — Final Design</p>
+      <h2>V2 — Fixing what testing revealed</h2>
+
+      <p class="cs-text">V2 wasn't a visual refresh — every change was directly traceable to a specific observation from V1 testing.</p>
+
+      <div class="cs-decisions">
+        <div class="cs-decision">
+          <span class="cs-decision__label">Hours</span>
+          <div>
+            <p class="cs-decision__title">Operating hours added to homepage and ticket screen</p>
+            <p class="cs-decision__why">Two participants paused to look for hours before buying. Adding them to the ticket selection screen removed a confidence barrier at exactly the right moment in the flow.</p>
+          </div>
+        </div>
+        <div class="cs-decision">
+          <span class="cs-decision__label">Form</span>
+          <div>
+            <p class="cs-decision__title">Single-column personal info layout</p>
+            <p class="cs-decision__why">The two-column form caused a participant to skip fields in the right column. Single column removes that ambiguity — users always know where the next field is.</p>
+          </div>
+        </div>
+        <div class="cs-decision">
+          <span class="cs-decision__label">Payment</span>
+          <div>
+            <p class="cs-decision__title">Dedicated payment screen with clear visual separation</p>
+            <p class="cs-decision__why">Separating payment from personal info reduces cognitive load — users can focus on one type of information at a time rather than processing personal and financial fields simultaneously.</p>
+          </div>
+        </div>
+        <div class="cs-decision">
+          <span class="cs-decision__label">Confirmation</span>
+          <div>
+            <p class="cs-decision__title">Ticket summary moved to top of confirmation</p>
+            <p class="cs-decision__why">Users want immediate reassurance that their purchase went through correctly. Leading with the ticket details — date, time, number — answers the first question before they have to scroll.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-carousel" data-carousel="v2">
+        <div class="cs-carousel__track">
+          <div class="cs-carousel__slide active"><img src="assets/img/highfi-v2-homepage.png" alt="V2: Homepage"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v2-ticket-type.png" alt="V2: Ticket type with hours visible"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v2-datetime.png" alt="V2: Date and time selection"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v2-personal-info.png" alt="V2: Single-column personal info form"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v2-payment.png" alt="V2: Dedicated payment screen"></div>
+          <div class="cs-carousel__slide"><img src="assets/img/highfi-v2-confirmation.jpg" alt="V2: Confirmation with ticket summary at top"></div>
+        </div>
+        <div class="cs-carousel__controls">
+          <button class="cs-carousel__btn" data-dir="-1" aria-label="Previous">‹</button>
+          <div class="cs-carousel__dots">
+            <button class="cs-carousel__dot active" data-idx="0"></button>
+            <button class="cs-carousel__dot" data-idx="1"></button>
+            <button class="cs-carousel__dot" data-idx="2"></button>
+            <button class="cs-carousel__dot" data-idx="3"></button>
+            <button class="cs-carousel__dot" data-idx="4"></button>
+            <button class="cs-carousel__dot" data-idx="5"></button>
+          </div>
+          <button class="cs-carousel__btn" data-dir="1" aria-label="Next">›</button>
+        </div>
+        <p class="cs-carousel__caption">High fidelity V2 — final design, 6 screens</p>
+      </div>
+    </section>
+
+    <!-- ── 08 RESULTS ── -->
+    <section class="cs-section cs-accent">
+      <p class="cs-section__label">08 — Results</p>
+      <h2>What changed, and by how much</h2>
+
+      <div class="cs-results">
+        <div class="cs-result">
+          <span class="cs-result__value">7→4</span>
+          <p class="cs-result__label">Checkout steps reduced</p>
+          <p class="cs-result__desc">Eliminated three unnecessary navigation steps by consolidating ticket selection onto a single screen.</p>
+        </div>
+        <div class="cs-result">
+          <span class="cs-result__value">100%</span>
+          <p class="cs-result__label">Task completion rate</p>
+          <p class="cs-result__desc">All 5 final test participants completed the purchase unassisted. 0 completed it on the original site without friction.</p>
+        </div>
+        <div class="cs-result">
+          <span class="cs-result__value">2→0</span>
+          <p class="cs-result__label">Abandoned sessions</p>
+          <p class="cs-result__desc">2 of 5 participants abandoned the original site entirely before completing a purchase. 0 abandoned in the redesign.</p>
+        </div>
+        <div class="cs-result">
+          <span class="cs-result__value">0</span>
+          <p class="cs-result__label">Abandoned sessions in V2</p>
+          <p class="cs-result__desc">Compared to 2 out of 5 participants who abandoned entirely on the original site.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 09 REFLECTION ── -->
+    <div class="cs-reflection">
+      <h3>What I'd do differently</h3>
+      <p>The biggest lesson from this project was about where to focus first. I went in assuming the checkout form was the problem — it's where e-commerce usually fails. But usability testing showed the real drop-off happened much earlier, at the homepage, before users even found the ticket path. That discovery completely reordered my priorities and led to a stronger solution. It's a reminder that assumptions, however reasonable, need to be tested before you design around them.</p>
+    </div>
+
+    <!-- ── 10 NEXT STEPS ── -->
+    <section class="cs-section">
+      <p class="cs-section__label">10 — Next Steps</p>
+      <h2>Where this design could go further</h2>
+
+      <div class="cs-nextsteps">
+        <div class="cs-nextstep">
+          <div class="cs-nextstep__num">01</div>
+          <p class="cs-nextstep__title">Real-time availability</p>
+          <p class="cs-nextstep__desc">Show remaining ticket availability per time slot to create urgency and help users make faster decisions.</p>
+        </div>
+        <div class="cs-nextstep">
+          <div class="cs-nextstep__num">02</div>
+          <p class="cs-nextstep__title">Progress indicator</p>
+          <p class="cs-nextstep__desc">Add a visible step indicator (1 of 3) so users always know how close they are to completing the purchase.</p>
+        </div>
+        <div class="cs-nextstep">
+          <div class="cs-nextstep__num">03</div>
+          <p class="cs-nextstep__title">A/B test with real visitors</p>
+          <p class="cs-nextstep__desc">Run the redesigned flow against the original with analytics to measure actual conversion lift, not just task completion in testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="cs-footer">
+      <a href="index.html" class="cs-footer__btn">← Back to Portfolio</a>
+    </div>
+
+  </div>
+
   <footer class="footer">
-    <div class="footer__wrapper wrapper--large">
-      <p class="footer__copyright">&copy; 2025 Chloe Cook</p>
-      <a class="logo" href="index.html">CC</a>
+    <div class="footer__inner">
+      <p class="footer__copy">© 2025 Chloe Cook</p>
+      <a class="footer__logo" href="index.html">CC</a>
     </div>
   </footer>
 
   <script>
-    // Mid-fidelity wireframes carousel
-    let slideIndex = 1;
-    showSlides(slideIndex);
+    document.querySelectorAll('.cs-carousel').forEach(carousel => {
+      const slides = carousel.querySelectorAll('.cs-carousel__slide');
+      const dots   = carousel.querySelectorAll('.cs-carousel__dot');
+      let cur = 0;
 
-    function changeSlide(n) {
-      showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-      let slides = document.querySelectorAll(".wireframe-carousel:first-of-type .carousel-image");
-      let dots = document.querySelectorAll(".wireframe-carousel:first-of-type .dot");
-      
-      if (n > slides.length) { slideIndex = 1 }
-      if (n < 1) { slideIndex = slides.length }
-      
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
+      function go(n) {
+        slides[cur].classList.remove('active');
+        dots[cur].classList.remove('active');
+        cur = (n + slides.length) % slides.length;
+        slides[cur].classList.add('active');
+        dots[cur].classList.add('active');
       }
-      
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
-      }
-      
-      slides[slideIndex - 1].classList.add("active");
-      dots[slideIndex - 1].classList.add("active");
-    }
 
-    // Brand elements carousel
-    let brandSlideIndex = 1;
-    showBrandSlides(brandSlideIndex);
+      carousel.querySelectorAll('.cs-carousel__btn').forEach(btn => {
+        btn.addEventListener('click', () => go(cur + parseInt(btn.dataset.dir)));
+      });
 
-    function changeBrandSlide(n) {
-      showBrandSlides(brandSlideIndex += n);
-    }
-
-    function currentBrandSlide(n) {
-      showBrandSlides(brandSlideIndex = n);
-    }
-
-    function showBrandSlides(n) {
-      let carousels = document.querySelectorAll(".wireframe-carousel");
-      let slides = carousels[1].querySelectorAll(".carousel-image");
-      let dots = carousels[1].querySelectorAll(".dot");
-      
-      if (n > slides.length) { brandSlideIndex = 1 }
-      if (n < 1) { brandSlideIndex = slides.length }
-      
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
-      }
-      
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
-      }
-      
-      slides[brandSlideIndex - 1].classList.add("active");
-      dots[brandSlideIndex - 1].classList.add("active");
-    }
-
-    // High-fidelity V1 carousel
-    let highfiV1SlideIndex = 1;
-    showHighfiV1Slides(highfiV1SlideIndex);
-
-    function changeHighfiV1Slide(n) {
-      showHighfiV1Slides(highfiV1SlideIndex += n);
-    }
-
-    function currentHighfiV1Slide(n) {
-      showHighfiV1Slides(highfiV1SlideIndex = n);
-    }
-
-    function showHighfiV1Slides(n) {
-      let carousels = document.querySelectorAll(".wireframe-carousel");
-      let slides = carousels[2].querySelectorAll(".carousel-image");
-      let dots = carousels[2].querySelectorAll(".dot");
-      
-      if (n > slides.length) { highfiV1SlideIndex = 1 }
-      if (n < 1) { highfiV1SlideIndex = slides.length }
-      
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
-      }
-      
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
-      }
-      
-      slides[highfiV1SlideIndex - 1].classList.add("active");
-      dots[highfiV1SlideIndex - 1].classList.add("active");
-    }
-
-    // High-fidelity V2 carousel
-    let highfiV2SlideIndex = 1;
-    showHighfiV2Slides(highfiV2SlideIndex);
-
-    function changeHighfiV2Slide(n) {
-      showHighfiV2Slides(highfiV2SlideIndex += n);
-    }
-
-    function currentHighfiV2Slide(n) {
-      showHighfiV2Slides(highfiV2SlideIndex = n);
-    }
-
-    function showHighfiV2Slides(n) {
-      let carousels = document.querySelectorAll(".wireframe-carousel");
-      let slides = carousels[3].querySelectorAll(".carousel-image");
-      let dots = carousels[3].querySelectorAll(".dot");
-      
-      if (n > slides.length) { highfiV2SlideIndex = 1 }
-      if (n < 1) { highfiV2SlideIndex = slides.length }
-      
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
-      }
-      
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
-      }
-      
-      slides[highfiV2SlideIndex - 1].classList.add("active");
-      dots[highfiV2SlideIndex - 1].classList.add("active");
-    }
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => go(parseInt(dot.dataset.idx)));
+      });
+    });
   </script>
+
 </body>
 </html>

@@ -1,373 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Personal Projects - Chloe Cook</title>
+  <title>Personal Projects — Chloe Cook</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Merriweather+Sans:wght@400;700;800&display=swap" rel="stylesheet">
   <style>
-    /* Page-specific styles */
-    .contact {
-      position: relative;
-      padding: 60px 0;
-      background-color: #fff;
+
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #557851;
+      --green-light: #6b9165;
+      --green-pale:  #f0f5ee;
+      --ink:         #1a1a1a;
+      --ink-mid:     #585858;
+      --ink-soft:    #757575;
+      --surface:     #f9f9f6;
+      --white:       #ffffff;
+      --accent:      #6882f6;
+      --border:      rgba(0,0,0,0.08);
+      --transition:  .25s cubic-bezier(.4,0,.2,1);
     }
-    
-    .contact__heading {
-      margin: 0 0 45px 0;
-      color: #585858;
-      font-size: 58px;
-      font-weight: 800;
-      text-align: center;
+
+    body {
+      font-family: "Merriweather Sans", sans-serif;
+      font-size: 15px; line-height: 1.65;
+      color: var(--ink-soft);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    
-    .contact__wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 60px 0;
-      position: relative;
-    }
-    
-    .contact__wrapper::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 75px;
-      right: 75px;
-      bottom: 0;
-      border: 10px solid #557851;
-    }
-    
-    .contact__visual {
-      position: relative;
-      width: 47.5%;
-      box-shadow: 5px 8px 30px 1px rgba(0,0,0,0.21);
-      z-index: 2;
-    }
-    
-    .contact__visual img {
-      display: block;
-      width: 100%;
-    }
-    
-    .contact__form {
-      position: relative;
-      width: 47.5%;
-      padding: 15px 30px;
-      background-color: #fff;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .contact__wrapper h3 {
-      color: #585858;
-      font-size: 32px;
-      margin: 0;
-    }
-    
-    .title {
-      font-weight: 800;
-    }
-    
-    .projects-page {
-      padding-top: 80px;
-      min-height: 100vh;
-    }
-    
-    .projects-hero {
-      text-align: center;
-      padding: 100px 40px 80px;
-      background: linear-gradient(135deg, #f5f7f5 0%, #fff 100%);
-      border-bottom: 3px solid #557851;
-    }
-    
-    .projects-hero__title {
-      color: #585858;
-      font-size: 58px;
-      font-weight: 800;
-      margin: 0 0 15px 0;
-    }
-    
-    .projects-hero__subtitle {
-      color: #757575;
-      font-size: 18px;
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-    
-    .projects-grid {
-      max-width: 1170px;
-      margin: 80px auto;
-      padding: 0 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 60px;
-    }
-    
-    .project-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-      display: block;
-      color: inherit;
-    }
-    
-    .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-    
-    .project-card__image {
-      width: 100%;
-      height: 300px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-    
-    .project-card__tag {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #557851;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .project-card__content {
-      padding: 40px;
-    }
-    
-    .project-card__title {
-      font-size: 28px;
-      color: #222;
-      margin-bottom: 15px;
-      font-weight: 800;
-    }
-    
-    .project-card__description {
-      font-size: 16px;
-      color: #757575;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-    
-    .project-card__link {
+
+    a { color: var(--green); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    p { margin-bottom: 1.1em; }
+    p:last-child { margin-bottom: 0; }
+
+    .wrapper { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 768px) { .wrapper { padding: 0 20px; } }
+
+    .tag {
       display: inline-block;
-      color: #557851;
-      font-weight: 700;
-      text-decoration: none;
-      transition: color 0.2s ease;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--green); background: var(--green-pale);
+      padding: 4px 10px; border-radius: 20px;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 68px;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+    }
+
+    .nav__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+    }
+
+    .nav__logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 26px; font-weight: 400;
+      color: var(--ink); letter-spacing: -.01em;
+    }
+
+    .nav__links { display: flex; gap: 36px; list-style: none; }
+
+    .nav__links a {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-mid);
+      transition: color var(--transition);
+    }
+
+    .nav__links a:hover,
+    .nav__links a.active { color: var(--green); }
+
+    @media (max-width: 640px) { .nav__links { display: none; } }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      padding: 148px 0 90px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -120px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #e8f0e6 0%, transparent 65%);
       pointer-events: none;
     }
-    
-    .project-card:hover .project-card__link {
-      color: #6b9165;
+
+    .page-hero__eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 20px;
+      animation: fadeUp .6s .1s both;
     }
-    
-    .project-card__link::after {
-      content: " →";
+
+    .page-hero__eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 2px;
+      background: var(--green); border-radius: 2px;
     }
-    
+
+    .page-hero__headline {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(46px, 7vw, 80px);
+      font-weight: 400; color: var(--ink);
+      letter-spacing: -.03em; line-height: 1.05;
+      margin-bottom: 24px;
+      animation: fadeUp .7s .2s both;
+    }
+
+    .page-hero__headline em { font-style: italic; color: var(--green); }
+
+    .page-hero__sub {
+      font-size: 18px; line-height: 1.7;
+      color: var(--ink-soft); max-width: 520px;
+      animation: fadeUp .7s .35s both;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 52px; gap: 20px;
+    }
+
+    .section-title {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 400; color: var(--ink);
+      letter-spacing: -.02em; line-height: 1.1;
+      margin-top: 12px;
+    }
+
+    /* ─── GRID ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 1000px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px)  { .projects-grid { grid-template-columns: 1fr; } }
+
+    /* ─── CARD ─── */
+    .project-card {
+      display: flex; flex-direction: column;
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow var(--transition), transform var(--transition);
+      animation: fadeUp .5s both;
+    }
+
+    .project-card:nth-child(1) { animation-delay: .1s; }
+    .project-card:nth-child(2) { animation-delay: .2s; }
+    .project-card:nth-child(3) { animation-delay: .3s; }
+    .project-card:nth-child(4) { animation-delay: .4s; }
+
+    .project-card:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,.10);
+      transform: translateY(-4px);
+    }
+
+    .project-card__img {
+      width: 100%; height: 200px;
+      background-size: cover; background-position: center;
+      background-color: var(--green-pale);
+      position: relative; flex-shrink: 0;
+    }
+
+    .project-card__tag {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(255,255,255,.95);
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+
+    .project-card__body {
+      padding: 24px 24px 28px;
+      display: flex; flex-direction: column; flex: 1;
+    }
+
+    .project-card__title {
+      font-family: "Instrument Serif", serif;
+      font-size: 20px; font-weight: 400;
+      color: var(--ink); letter-spacing: -.02em;
+      line-height: 1.2; margin-bottom: 10px;
+    }
+
+    .project-card__desc {
+      font-size: 13px; color: var(--ink-soft);
+      line-height: 1.65; flex: 1; margin-bottom: 18px;
+    }
+
+    .project-card__cta {
+      display: inline-block;
+      font-size: 13px; font-weight: 700;
+      color: var(--green);
+      border-bottom: 1.5px solid var(--green);
+      padding-bottom: 1px; width: fit-content;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .project-card:hover .project-card__cta {
+      color: var(--accent); border-color: var(--accent);
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-section { padding: 120px 0; }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+
+    .contact-inner__heading {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 400; color: var(--ink);
+      letter-spacing: -.03em; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .contact-inner__sub {
+      font-size: 16px; color: var(--ink-soft);
+      margin-bottom: 36px; line-height: 1.7;
+    }
+
+    .contact-inner__email {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 16px; font-weight: 700;
+      color: var(--green);
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 3px;
+      transition: color var(--transition), border-color var(--transition);
+    }
+
+    .contact-inner__email:hover { color: var(--accent); border-color: var(--accent); }
+
+    .contact-inner__img img { width: 100%; border-radius: 16px; }
+
     @media (max-width: 768px) {
-      .projects-hero__title {
-        font-size: 42px;
-      }
-      
-      .projects-grid {
-        grid-template-columns: 1fr;
-        padding: 0 20px;
-        gap: 40px;
-      }
-      
-      .project-card__image {
-        height: 200px;
-      }
-      
-      .project-card__content {
-        padding: 30px;
-      }
-      .contact__heading {
-        font-size: 48px;
-      }
-      
-      .contact__wrapper {
-        flex-direction: column;
-        padding: 0;
-      }
-      
-      .contact__wrapper::before {
-        top: 45px;
-        left: 0;
-        right: 0;
-        bottom: 45px;
-      }
-      
-      .contact__visual {
-        width: 600px;
-        max-width: 75%;
-        order: 2;
-      }
-      
-      .contact__form {
-        width: 600px;
-        max-width: 75%;
-        margin-bottom: 45px;
-        padding: 0 15px;
-        text-align: center;
-      }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner__img { display: none; }
     }
-    
-    @media (max-width: 767px) {
-      .contact__heading {
-        font-size: 32px;
-      }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center;
     }
-    
-    @media (max-width: 480px) {
-      .contact__wrapper::before {
-        display: none;
-      }
-      
-      .contact__visual {
-        max-width: 100%;
-      }
-      
-      .contact__form {
-        max-width: 100%;
-        padding: 0;
-      }
+
+    .footer__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
     }
+
+    .footer__copy { font-size: 13px; color: var(--ink-soft); }
+
+    .footer__logo {
+      font-family: "Instrument Serif", serif;
+      font-size: 22px; color: var(--ink);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
   </style>
 </head>
 <body>
-  <!-- SECTION: Navigation -->
-  <div id="top" class="navigation">
-    <div class="navigation__wrapper wrapper--large">
-      <a class="navigation__logo logo" href="index.html">CC</a>
-      <nav class="navigation__container">
-        <ul class="navigation__list">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="ux-projects.html">UX PROJECTS</a></li>
-          <li><a href="personal-projects.html">PERSONAL PROJECTS</a></li>
-          <li><a href="#contact">CONTACT</a></li>
-        </ul>
-      </nav>
-      
-      <div class="navigation__burger">
-        <span class="navigation__burger-el navigation__burger-el--top"></span>
-        <span class="navigation__burger-el navigation__burger-el--middle"></span>
-        <span class="navigation__burger-el navigation__burger-el--bottom"></span>
+
+  <!-- ── NAV ── -->
+  <nav class="nav" id="top">
+    <div class="wrapper nav__inner">
+      <a class="nav__logo" href="index.html">Chloe Cook</a>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="ux-projects.html">UX Projects</a></li>
+        <li><a href="personal-projects.html" class="active">Personal</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <header class="page-hero">
+    <div class="wrapper">
+      <p class="page-hero__eyebrow">Portfolio</p>
+      <h1 class="page-hero__headline">
+        Personal <em>Projects</em>
+      </h1>
+      <p class="page-hero__sub">
+        Creative coding, hardware experiments, 3D modeling, and other fun
+        projects exploring different technologies and ideas.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── GRID ── -->
+    <section class="projects">
+      <div class="wrapper">
+        <div class="section-header">
+          <div>
+            <span class="tag">Side Projects</span>
+            <h2 class="section-title">Built for fun</h2>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+
+          <!-- Zoo Pet Extension -->
+          <a href="https://chromewebstore.google.com/detail/zoopetextension/epanbdfbelfdkpnhejfchfjombpkdeio" target="_blank" rel="noopener" class="project-card">
+            <div class="project-card__img" style="background-image: url('assets/img/Pets.png');">
+              <span class="project-card__tag">Chrome Extension</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Zoo Pet Extension</h3>
+              <p class="project-card__desc">My own published Chrome Web Store app — adopt and care for a virtual panda, hippo, or tiger right in your browser.</p>
+              <span class="project-card__cta">View on Chrome Store →</span>
+            </div>
+          </a>
+
+          <!-- BMO Arduino -->
+          <a href="https://chloecook1224.github.io//wa/idc2.html" target="_blank" rel="noopener" class="project-card">
+            <div class="project-card__img" style="background-image: url('assets/img/bmo.png');">
+              <span class="project-card__tag">Hardware</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">BMO Arduino</h3>
+              <p class="project-card__desc">Adventure Time's BMO brought to life as an interactive Tamagotchi using Arduino.</p>
+              <span class="project-card__cta">Check it out →</span>
+            </div>
+          </a>
+
+          <!-- Handcrafted Bench -->
+          <a href="/portfolioImage/bench.pdf" target="_blank" rel="noopener" class="project-card">
+            <div class="project-card__img" style="background-image: url('assets/img/bench.png');">
+              <span class="project-card__tag">CAD / Fabrication</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Handcrafted Bench</h3>
+              <p class="project-card__desc">Designed in CAD and handcrafted into a real, functional piece of furniture.</p>
+              <span class="project-card__cta">View project →</span>
+            </div>
+          </a>
+
+          <!-- Kirby Mario Kart -->
+          <a href="/portfolioImage/KirbyLink.png" target="_blank" rel="noopener" class="project-card">
+            <div class="project-card__img" style="background-image: url('assets/img/kirby.png');">
+              <span class="project-card__tag">3D Modeling</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Kirby Mario Kart</h3>
+              <p class="project-card__desc">3D modeled Kirby racing in Mario Kart, built entirely in SketchUp.</p>
+              <span class="project-card__cta">View model →</span>
+            </div>
+          </a>
+
+        </div>
       </div>
-    </div>
-  </div>
-  <!-- END SECTION: Navigation -->
+    </section>
 
-  <!-- Projects Page Content -->
-  <div class="projects-page">
-    <!-- Hero Section -->
-    <div class="projects-hero">
-      <h1 class="projects-hero__title">Personal Projects</h1>
-      <p class="projects-hero__subtitle">Creative coding, hardware experiments, 3D modeling, and other fun projects exploring different technologies and ideas.</p>
-    </div>
-
-    <!-- Projects Grid -->
-    <div class="projects-grid">
-      <!-- Zoo Pet Extension -->
-      <a href="https://chromewebstore.google.com/detail/zoopetextension/epanbdfbelfdkpnhejfchfjombpkdeio" target="_blank" rel="noopener" class="project-card">
-        <div class="project-card__image" style="background-image: url('assets/img/Pets.png'); background-size: cover; background-position: center; background-color: #557851;">
-          <span class="project-card__tag">Chrome Extension</span>
+    <!-- ── CONTACT ── -->
+    <section id="contact" class="contact-section">
+      <div class="wrapper">
+        <div class="contact-inner">
+          <div>
+            <h2 class="contact-inner__heading">Let's work<br>together.</h2>
+            <p class="contact-inner__sub">
+              I'm currently looking for UX design opportunities. Whether you have a project,
+              a question, or just want to say hello — I'd love to hear from you.
+            </p>
+            <a href="mailto:chloecook1224@gmail.com" class="contact-inner__email">
+              chloecook1224@gmail.com
+            </a>
+          </div>
+          <div class="contact-inner__img">
+            <img src="assets/img/mail3.png" alt="Get in touch">
+          </div>
         </div>
-        <div class="project-card__content">
-          <h3 class="project-card__title">Zoo Pet Extension</h3>
-          <p class="project-card__description">My very own Chrome Web Store app! Take care of your virtual panda, hippo, or tiger right in your browser.</p>
-          <span class="project-card__link">Check it out</span>
-        </div>
-      </a>
-
-      <!-- BMO Arduino -->
-      <a href="https://chloecook1224.github.io//wa/idc2.html" target="_blank" rel="noopener" class="project-card">
-        <div class="project-card__image" style="background-image: url('assets/img/bmo.png'); background-size: cover; background-position: center; background-color: #557851;">
-          <span class="project-card__tag">Hardware</span>
-        </div>
-        <div class="project-card__content">
-          <h3 class="project-card__title">BMO Arduino</h3>
-          <p class="project-card__description">Adventure Time's BMO brought to life as your very own interactive Tamagotchi using Arduino!</p>
-          <span class="project-card__link">Check it out</span>
-        </div>
-      </a>
-
-      <!-- Handcrafted Bench -->
-      <a href="/portfolioImage/bench.pdf" target="_blank" rel="noopener" class="project-card">
-        <div class="project-card__image" style="background-image: url('assets/img/bench.png'); background-size: cover; background-position: center; background-color: #557851;">
-          <span class="project-card__tag">CAD / Fabrication</span>
-        </div>
-        <div class="project-card__content">
-          <h3 class="project-card__title">Handcrafted Bench</h3>
-          <p class="project-card__description">Designed in CAD and handcrafted into a real, functional piece of furniture.</p>
-          <span class="project-card__link">Check it out</span>
-        </div>
-      </a>
-
-      <!-- Kirby Mario Kart -->
-      <a href="/portfolioImage/KirbyLink.png" target="_blank" rel="noopener" class="project-card">
-        <div class="project-card__image" style="background-image: url('assets/img/kirby.png'); background-size: cover; background-position: center; background-color: #557851;">
-          <span class="project-card__tag">3D Modeling</span>
-        </div>
-        <div class="project-card__content">
-          <h3 class="project-card__title">Kirby Mario Kart</h3>
-          <p class="project-card__description">3D modeled Kirby racing in Mario Kart, created entirely in SketchUp!</p>
-          <span class="project-card__link">Check it out</span>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- SECTION: Contact -->
-  <section id="contact" class="contact">
-    <h2 class="contact__heading title">Contact Me</h2>
-    <div class="contact__wrapper wrapper--large">
-      <div class="contact__visual">
-        <img src="assets/img/mail3.png" alt="Email image">
       </div>
-      <div class="contact__form">
-        <h3>chloecook1224@gmail.com</h3>
-      </div>
-    </div>
-  </section>
-  <!-- END SECTION: Contact -->
+    </section>
 
-  <!-- SECTION: Footer -->
+  </main>
+
+  <!-- ── FOOTER ── -->
   <footer class="footer">
-    <div class="footer__wrapper wrapper--large">
-      <p class="footer__copyright no-margin">&copy; 2025 Chloe Cook</p>
-      <a class="footer__logo logo" href="index.html">CC</a>
-      <a class="footer__arrow" href="#top" aria-label="Back to top">  
-        <svg class="footer__arrow-el" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0" y="0" viewBox="0 0 130 65" xml:space="preserve" enable-background="new 0 0 130 65">
-          <g transform="translate(0.000000,65.000000) scale(0.100000,-0.100000)">
-            <path d="M315.4 365c-336-305-345-315-290-351 18-12 32-14 45-8 10 5 145 123 300 262l281 253 196-178c108-98 237-215 287-260 50-46 98-83 107-83s27 9 40 19c20 16 22 23 14 46 -12 33-623 585-647 585C638.4 650 489.4 522 315.4 365z"/>
-          </g>
-        </svg>
-      </a>
+    <div class="wrapper footer__inner">
+      <p class="footer__copy">© 2025 Chloe Cook</p>
+      <a class="footer__logo" href="#top">CC</a>
+      <a href="#top" aria-label="Back to top" style="font-size:13px; font-weight:700; color:var(--ink-soft);">↑ Top</a>
     </div>
   </footer>
-  <!-- END SECTION: Footer -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>
-  <script src="assets/js/functions-min.js"></script>
+
 </body>
 </html>
