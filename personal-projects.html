@@ -297,6 +297,47 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+
+    /* ─── HAMBURGER ─── */
+    .nav__burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav__burger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--ink); border-radius: 2px;
+      transition: all .3s ease; transform-origin: center;
+    }
+    .nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none; position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(255,255,255,.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 199; padding: 20px 40px 28px;
+      flex-direction: column; gap: 4px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-size: 14px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-mid); padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .22s ease;
+    }
+    .nav__mobile a:last-child { border-bottom: none; }
+    .nav__mobile a:hover, .nav__mobile a.active { color: var(--green); }
+    @media (max-width: 640px) { .nav__burger { display: flex; } }
   </style>
 </head>
 <body>
@@ -311,8 +352,17 @@
         <li><a href="personal-projects.html" class="active">Personal</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <button class="nav__burger" id="navBurger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+  <div class="nav__mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="ux-projects.html">UX Projects</a>
+    <a href="personal-projects.html" class="active">Personal</a>
+    <a href="#contact">Contact</a>
+  </div>
 
   <!-- ── HERO ── -->
   <header class="page-hero">
@@ -425,6 +475,18 @@
       <a href="#top" aria-label="Back to top" style="font-size:13px; font-weight:700; color:var(--ink-soft);">↑ Top</a>
     </div>
   </footer>
+  <script>
+    const burger = document.getElementById('navBurger');
+    const mobile = document.getElementById('navMobile');
+    if (burger) burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobile.classList.toggle('open');
+    });
+    if (mobile) mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobile.classList.remove('open');
+    }));
+  </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-2.2.4.min.js"><\/script>')</script>

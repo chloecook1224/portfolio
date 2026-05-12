@@ -360,7 +360,8 @@
       border-radius: 8px;
       background: var(--green-pale);
       display: flex; align-items: center; justify-content: center;
-      font-size: 15px; flex-shrink: 0;
+      flex-shrink: 0;
+      color: var(--green);
     }
 
     .cs-hmw__text {
@@ -647,6 +648,47 @@
       font-family: "Instrument Serif", serif;
       font-size: 22px; color: var(--ink);
     }
+
+    /* ─── HAMBURGER ─── */
+    .nav__burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav__burger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--ink); border-radius: 2px;
+      transition: all .3s ease; transform-origin: center;
+    }
+    .nav__burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none; position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(255,255,255,.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 199; padding: 20px 40px 28px;
+      flex-direction: column; gap: 4px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-size: 14px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-mid); padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .22s ease;
+    }
+    .nav__mobile a:last-child { border-bottom: none; }
+    .nav__mobile a:hover { color: var(--green); }
+    @media (max-width: 640px) { .nav__burger { display: flex; } }
   </style>
 </head>
 <body>
@@ -661,8 +703,17 @@
         Back to Portfolio
       </a>
       <a class="nav__logo" href="index.html">CC</a>
+      <button class="nav__burger" id="navBurger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+  <div class="nav__mobile" id="navMobile">
+    <a href="index.html">Home</a>
+    <a href="ux-projects.html">UX Projects</a>
+    <a href="personal-projects.html">Personal</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
 
   <!-- HERO -->
   <div class="cs-hero">
@@ -794,15 +845,15 @@
 
       <div class="cs-hmw">
         <div class="cs-hmw__item">
-          <div class="cs-hmw__icon">🗺️</div>
+          <div class="cs-hmw__icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
           <p class="cs-hmw__text">How might we help first-time visitors find ticket pricing and availability without leaving the homepage?</p>
         </div>
         <div class="cs-hmw__item">
-          <div class="cs-hmw__icon">✂️</div>
+          <div class="cs-hmw__icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
           <p class="cs-hmw__text">How might we reduce the number of decisions a user has to make before they reach checkout?</p>
         </div>
         <div class="cs-hmw__item">
-          <div class="cs-hmw__icon">👁️</div>
+          <div class="cs-hmw__icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <p class="cs-hmw__text">How might we make critical information — hours, prices, what's included — immediately scannable without overwhelming the page?</p>
         </div>
       </div>
@@ -1057,11 +1108,7 @@
           <p class="cs-result__label">Abandoned sessions</p>
           <p class="cs-result__desc">2 of 5 participants abandoned the original site entirely before completing a purchase. 0 abandoned in the redesign.</p>
         </div>
-        <div class="cs-result">
-          <span class="cs-result__value">0</span>
-          <p class="cs-result__label">Abandoned sessions in V2</p>
-          <p class="cs-result__desc">Compared to 2 out of 5 participants who abandoned entirely on the original site.</p>
-        </div>
+
       </div>
     </section>
 
@@ -1073,7 +1120,7 @@
 
     <!-- ── 10 NEXT STEPS ── -->
     <section class="cs-section">
-      <p class="cs-section__label">10 — Next Steps</p>
+      <p class="cs-section__label">09 — Next Steps</p>
       <h2>Where this design could go further</h2>
 
       <div class="cs-nextsteps">
@@ -1129,6 +1176,15 @@
       dots.forEach(dot => {
         dot.addEventListener('click', () => go(parseInt(dot.dataset.idx)));
       });
+    });
+  </script>
+
+  <script>
+    const burger = document.getElementById('navBurger');
+    const mobile = document.getElementById('navMobile');
+    if (burger) burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobile.classList.toggle('open');
     });
   </script>
 
